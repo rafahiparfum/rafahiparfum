@@ -1,0 +1,4486 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rafahi Parfum - L'Art de la Fragrance</title>
+  <meta name="description" content="Rafahi Parfum - Selection exclusive de parfums de luxe, huiles parfumees et attars. Livraison partout au Senegal." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    :root {
+      --noir: #0A0A0A;
+      --blanc: #F8F8F8;
+      --or: #D4AF37;
+      --or-light: #E8C96A;
+      --or-dark: #A88B1E;
+      --gris: #1A1A1A;
+      --gris-mid: #2C2C2C;
+      --text-muted: #888;
+      --text-light: #BBB;
+      --transition: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--noir);
+      color: var(--blanc);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    .cursor {
+      width: 8px; height: 8px;
+      background: var(--or);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(212,175,55,0.5);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s var(--transition), width 0.3s, height 0.3s, border-color 0.3s;
+    }
+    body:has(a:hover) .cursor, body:has(button:hover) .cursor { width: 14px; height: 14px; background: var(--or-light); }
+    body:has(a:hover) .cursor-ring, body:has(button:hover) .cursor-ring { width: 50px; height: 50px; border-color: var(--or); }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.035) 0 1px, transparent 1px),
+        radial-gradient(circle at 80% 70%, rgba(212,175,55,0.035) 0 1px, transparent 1px);
+      background-size: 18px 18px, 26px 26px;
+      opacity: 0.35;
+      pointer-events: none; z-index: 1000;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      padding: 1.5rem 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.5s, padding 0.5s;
+    }
+    nav.scrolled {
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(20px);
+      padding: 1rem 5%;
+      border-bottom: 1px solid rgba(212,175,55,0.15);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 400; letter-spacing: 0.25em;
+      color: var(--or); text-decoration: none;
+      text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--text-light); text-decoration: none;
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px; background: var(--or);
+      transition: width 0.3s var(--transition);
+    }
+    .nav-links a:hover { color: var(--or); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cart {
+      background: none; border: 1px solid var(--or);
+      color: var(--or); padding: 0.55rem 1.4rem;
+      font-family: 'Jost', sans-serif; font-size: 0.68rem; letter-spacing: 0.2em;
+      text-transform: uppercase; cursor: none;
+      transition: background 0.3s, color 0.3s;
+      position: relative;
+    }
+    .nav-cart:hover { background: var(--or); color: var(--noir); }
+    .cart-count {
+      position: absolute; top: -9px; right: -9px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--or); color: var(--noir);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.62rem; letter-spacing: 0; font-weight: 500;
+    }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: none; padding: 4px; }
+    .hamburger span { width: 24px; height: 1px; background: var(--or); display: block; transition: 0.3s; }
+
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      background: radial-gradient(ellipse at 30% 50%, #1a1200 0%, var(--noir) 60%);
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(90deg, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.58) 46%, rgba(10,10,10,0.82) 100%),
+        linear-gradient(to bottom, rgba(10,10,10,0.2), rgba(10,10,10,0.85)),
+        url("assets/images/hero1.jpg") center / cover no-repeat,
+        radial-gradient(ellipse 60% 80% at 70% 50%, rgba(212,175,55,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(212,175,55,0.04) 0%, transparent 60%);
+    }
+    .hero-lines {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(212,175,55,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,175,55,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 70%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; padding: 0 5%;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      font-size: 0.65rem; letter-spacing: 0.4em; color: var(--or);
+      text-transform: uppercase; margin-bottom: 2rem;
+      opacity: 0; animation: fadeUp 1s 0.3s var(--transition) forwards;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; display: inline-block; width: 38px; height: 1px;
+      background: rgba(212,175,55,0.45); vertical-align: middle; margin: 0 0.8rem;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 10vw, 8.5rem);
+      font-weight: 300; line-height: 0.9;
+      letter-spacing: -0.02em;
+      color: var(--blanc);
+      opacity: 0; animation: fadeUp 1.2s 0.5s var(--transition) forwards;
+      margin-bottom: 0.15em;
+    }
+    .hero-title span { color: var(--or); font-style: italic; }
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 300; font-style: italic;
+      color: var(--text-light); letter-spacing: 0.05em;
+      margin: 1.5rem 0 1rem;
+      opacity: 0; animation: fadeUp 1s 0.8s var(--transition) forwards;
+    }
+    .hero-text {
+      font-size: 0.85rem; color: var(--text-muted);
+      letter-spacing: 0.05em; line-height: 1.9; max-width: 540px;
+      margin: 0 auto 3rem;
+      opacity: 0; animation: fadeUp 1s 1s var(--transition) forwards;
+    }
+    .hero-btns {
+      display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 1s 1.2s var(--transition) forwards;
+    }
+    .btn-primary {
+      background: var(--or); color: var(--noir);
+      padding: 1rem 2.4rem; font-family: 'Jost', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+      border: none; cursor: none; font-weight: 400; text-decoration: none;
+      transition: background 0.3s, transform 0.3s;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .btn-primary:hover { background: var(--or-light); transform: translateY(-2px); }
+    .btn-secondary {
+      background: transparent; color: var(--blanc);
+      padding: 1rem 2.4rem; font-family: 'Jost', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+      border: 1px solid rgba(248,248,248,0.25); cursor: none; font-weight: 300; text-decoration: none;
+      transition: border-color 0.3s, color 0.3s, transform 0.3s;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .btn-secondary:hover { border-color: var(--or); color: var(--or); transform: translateY(-2px); }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      margin-top: 2.5rem; padding: 0.5rem 1.2rem;
+      border: 1px solid rgba(212,175,55,0.3);
+      font-size: 0.68rem; letter-spacing: 0.2em; color: var(--or);
+      text-transform: uppercase;
+      opacity: 0; animation: fadeUp 1s 1.4s var(--transition) forwards;
+    }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      font-size: 0.6rem; letter-spacing: 0.3em; color: var(--text-muted);
+      text-transform: uppercase;
+      opacity: 0; animation: fadeIn 1s 2s forwards;
+    }
+    .scroll-line {
+      width: 1px; height: 50px; background: linear-gradient(to bottom, var(--or), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+    .hero-side-text {
+      position: absolute; right: 3rem; top: 50%; transform: translateY(-50%) rotate(90deg);
+      font-size: 0.6rem; letter-spacing: 0.35em; color: rgba(212,175,55,0.4);
+      text-transform: uppercase; transform-origin: center center;
+      white-space: nowrap;
+    }
+    .hero-ornament {
+      position: absolute; left: 5%; top: 50%; transform: translateY(-50%);
+      width: 1px; height: 200px;
+      background: linear-gradient(to bottom, transparent, rgba(212,175,55,0.3), transparent);
+    }
+
+    section { padding: 7rem 5%; }
+    .section-label {
+      font-size: 0.6rem; letter-spacing: 0.4em; color: var(--or);
+      text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 300; line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .section-title em { font-style: italic; color: var(--or); }
+    .gold-line {
+      width: 50px; height: 1px; background: var(--or);
+      margin: 1.5rem 0;
+    }
+
+    #why {
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(212,175,55,0.04) 0%, transparent 70%);
+      border-top: 1px solid rgba(212,175,55,0.1);
+    }
+    .why-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+    }
+    .why-text p {
+      font-size: 1rem; line-height: 2; color: var(--text-muted); font-weight: 300;
+    }
+    .why-cards { display: flex; flex-direction: column; gap: 1.5rem; }
+    .why-card {
+      padding: 2rem 2rem 2rem 1.8rem;
+      border-left: 1px solid rgba(212,175,55,0.3);
+      background: linear-gradient(135deg, rgba(212,175,55,0.04) 0%, transparent 100%);
+      position: relative; overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .why-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 0; height: 100%; background: rgba(212,175,55,0.04);
+      transition: width 0.5s var(--transition);
+    }
+    .why-card:hover { border-color: var(--or); transform: translateX(4px); }
+    .why-card:hover::before { width: 100%; }
+    .why-card-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 2.5rem;
+      color: rgba(212,175,55,0.15); font-weight: 300; line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .why-card h3 {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+      color: var(--or); font-weight: 400; margin-bottom: 0.4rem; letter-spacing: 0.05em;
+    }
+    .why-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.8; }
+
+    #catalogue { background: var(--gris); }
+    .catalogue-header {
+      max-width: 1200px; margin: 0 auto 3rem;
+      display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;
+    }
+    .filters { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .filter-btn {
+      background: none; border: 1px solid rgba(212,175,55,0.2);
+      color: var(--text-muted); padding: 0.45rem 1.1rem;
+      font-family: 'Jost', sans-serif; font-size: 0.68rem; letter-spacing: 0.15em;
+      text-transform: uppercase; cursor: none;
+      transition: all 0.3s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--or); border-color: var(--or); color: var(--noir);
+    }
+    .catalogue-search {
+      max-width: 1200px; margin: -1.5rem auto 2rem;
+      position: relative;
+    }
+    .catalogue-search svg {
+      position: absolute; left: 1.1rem; top: 50%; transform: translateY(-50%);
+      width: 18px; height: 18px; color: var(--or); opacity: 0.85;
+      pointer-events: none;
+    }
+    .catalogue-search input {
+      width: 100%; background: rgba(10,10,10,0.78);
+      border: 1px solid rgba(212,175,55,0.22);
+      color: var(--blanc); padding: 1rem 1.1rem 1rem 3rem;
+      font-family: 'Jost', sans-serif; font-size: 0.82rem; letter-spacing: 0.08em;
+      outline: none; border-radius: 6px;
+      transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    }
+    .catalogue-search input::placeholder {
+      color: rgba(245,239,226,0.45); text-transform: uppercase; letter-spacing: 0.14em;
+    }
+    .catalogue-search input:focus {
+      border-color: var(--or); background: rgba(10,10,10,0.92);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.08), 0 18px 40px rgba(0,0,0,0.22);
+    }
+    .catalogue-empty {
+      grid-column: 1 / -1; max-width: 1200px; width: 100%; margin: 0 auto;
+      border: 1px solid rgba(212,175,55,0.2);
+      color: var(--text-muted); padding: 2rem;
+      text-align: center; font-size: 0.82rem; letter-spacing: 0.08em;
+      background: rgba(10,10,10,0.45);
+    }
+    .products-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5px;
+    }
+    .product-card {
+      background: var(--noir); position: relative; overflow: hidden;
+      transition: transform 0.4s var(--transition);
+      cursor: none;
+    }
+    .product-card:hover { transform: translateY(-6px); }
+    .product-img {
+      width: 100%; aspect-ratio: 3/4; overflow: hidden; position: relative;
+      background: linear-gradient(135deg, #111 0%, #1a1500 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .product-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: drop-shadow(0 28px 35px rgba(0,0,0,0.5));
+      transition: transform 0.6s var(--transition);
+    }
+    .product-img img.product-img-contain {
+      object-fit: contain;
+      padding: 1.2rem;
+    }
+    .product-card:hover .product-img img { transform: scale(1.05); }
+    .product-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.7) 0%, transparent 60%);
+    }
+    .product-badge {
+      position: absolute; top: 1rem; left: 1rem; z-index: 2;
+      background: var(--or); color: var(--noir);
+      font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.3rem 0.7rem; font-weight: 500;
+    }
+    .product-overlay {
+      position: absolute; inset: 0; z-index: 3;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(10,10,10,0.6); opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .product-card:hover .product-overlay { opacity: 1; }
+    .product-info { padding: 1.4rem 1.4rem 1.6rem; }
+    .product-category {
+      font-size: 0.6rem; letter-spacing: 0.3em; color: var(--or);
+      text-transform: uppercase; margin-bottom: 0.4rem;
+    }
+    .product-name {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.25rem;
+      font-weight: 400; margin-bottom: 0.4rem; color: var(--blanc);
+    }
+    .product-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+    .product-price {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+      color: var(--or); font-weight: 400;
+    }
+    .product-price span { font-size: 0.7rem; color: var(--text-muted); font-family: 'Jost', sans-serif; }
+    .btn-cart {
+      background: none; border: 1px solid rgba(212,175,55,0.3);
+      color: var(--or); padding: 0.5rem 1rem;
+      font-family: 'Jost', sans-serif; font-size: 0.65rem; letter-spacing: 0.15em;
+      text-transform: uppercase; cursor: none;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+    .btn-cart:hover { background: var(--or); color: var(--noir); border-color: var(--or); }
+
+    #vedette {
+      background: linear-gradient(135deg, var(--noir) 0%, #0f0b00 50%, var(--noir) 100%);
+      padding: 7rem 5%;
+    }
+    .vedette-inner { max-width: 1200px; margin: 0 auto; }
+    .vedette-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 3rem;
+    }
+    .vedette-main {
+      grid-row: span 2;
+      background: linear-gradient(135deg, #120e00 0%, #1a1500 100%);
+      padding: 4rem; position: relative; overflow: hidden;
+      min-height: 500px; display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .vedette-main::before {
+      content: ''; position: absolute; top: 2rem; left: 50%;
+      transform: translateX(-50%);
+      background: radial-gradient(ellipse at 50% 50%, rgba(212,175,55,0.2) 0%, transparent 70%);
+      width: 300px; height: 300px; border-radius: 50%;
+    }
+    .vedette-img {
+      position: absolute; top: 1.8rem; left: 50%; transform: translateX(-50%);
+      width: min(58%, 320px); height: 250px; object-fit: contain;
+      filter: drop-shadow(0 35px 40px rgba(0,0,0,0.48));
+    }
+    .vedette-secondary {
+      background: #0f0c00; padding: 2.5rem;
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; overflow: hidden;
+      min-height: 248px;
+    }
+    .vedette-secondary .vedette-img {
+      position: static; transform: none; width: 118px; height: 118px;
+      margin: 0 0 1rem; opacity: 0.95;
+    }
+    .vedette-label {
+      font-size: 0.55rem; letter-spacing: 0.4em; color: var(--or);
+      text-transform: uppercase; margin-bottom: 0.6rem;
+    }
+    .vedette-name {
+      font-family: 'Cormorant Garamond', serif; font-size: 2.2rem;
+      font-weight: 300; margin-bottom: 0.8rem;
+    }
+    .vedette-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 1.5rem; }
+    .vedette-price-btn { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .price-large { font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--or); }
+    .price-large span { font-size:0.8rem; color:var(--text-muted); }
+
+    #temoignages {
+      background: var(--gris);
+      border-top: 1px solid rgba(212,175,55,0.1);
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+    }
+    .temoignages-inner { max-width: 1200px; margin: 0 auto; }
+    .temoignages-header { text-align: center; margin-bottom: 4rem; }
+    .temoignages-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5px;
+    }
+    .temoignage {
+      background: var(--noir); padding: 2.5rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    .temoignage::before {
+      content: '"'; font-family: 'Cormorant Garamond', serif;
+      font-size: 8rem; line-height: 1; color: rgba(212,175,55,0.08);
+      position: absolute; top: -0.5rem; left: 1rem;
+      pointer-events: none;
+    }
+    .stars { color: var(--or); font-size: 0.7rem; letter-spacing: 0.2em; margin-bottom: 1rem; }
+    .temoignage-text {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.05rem;
+      font-style: italic; line-height: 1.8; color: var(--text-light);
+      margin-bottom: 1.5rem; position: relative; z-index: 1;
+    }
+    .temoignage-author { display: flex; align-items: center; gap: 0.8rem; }
+    .author-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--or-dark), var(--or));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; color: var(--noir); font-weight: 600;
+      flex-shrink: 0;
+    }
+    .author-name { font-size: 0.8rem; font-weight: 400; color: var(--blanc); letter-spacing: 0.05em; }
+    .author-city { font-size: 0.65rem; color: var(--text-muted); }
+
+    #livraison {
+      background: linear-gradient(135deg, #0a0a0a 0%, #0d0b00 50%, #0a0a0a 100%);
+      text-align: center;
+    }
+    .livraison-inner { max-width: 800px; margin: 0 auto; }
+    .livraison-mark {
+      width: 70px; height: 70px; border: 1px solid rgba(212,175,55,0.35);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem; color: var(--or);
+      font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
+    }
+    .livraison-cities {
+      display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
+      margin: 2.5rem 0;
+    }
+    .city-tag {
+      border: 1px solid rgba(212,175,55,0.25); color: var(--text-muted);
+      padding: 0.4rem 1rem; font-size: 0.7rem; letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .city-tag:hover { border-color: var(--or); color: var(--or); }
+    .livraison-features {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem;
+    }
+    .livraison-feat {
+      padding: 1.5rem; border: 1px solid rgba(212,175,55,0.1);
+      transition: border-color 0.3s;
+    }
+    .livraison-feat:hover { border-color: rgba(212,175,55,0.3); }
+    .livraison-feat h4 { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--or); margin-bottom: 0.3rem; }
+    .livraison-feat p { font-size: 0.72rem; color: var(--text-muted); line-height: 1.7; }
+
+    #commande {
+      background: var(--gris);
+      border-top: 1px solid rgba(212,175,55,0.1);
+    }
+    .commande-inner { max-width: 1200px; margin: 0 auto; }
+    .commande-header { text-align: center; margin-bottom: 4rem; }
+    .commande-grid {
+      display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 1.5px;
+      background: rgba(212,175,55,0.18);
+      border: 1px solid rgba(212,175,55,0.12);
+    }
+    .order-form, .summary-panel {
+      background: var(--noir);
+      padding: clamp(1.8rem, 4vw, 3rem);
+    }
+    .form-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+    }
+    .form-field { display: flex; flex-direction: column; gap: 0.45rem; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label {
+      font-size: 0.62rem; letter-spacing: 0.22em; color: var(--or);
+      text-transform: uppercase;
+    }
+    .form-field input, .form-field select, .form-field textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(212,175,55,0.18);
+      color: var(--blanc);
+      padding: 0.9rem 1rem;
+      font-family: 'Jost', sans-serif;
+      outline: none;
+      min-height: 48px;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .form-field textarea { min-height: 120px; resize: vertical; }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+      border-color: var(--or); background: rgba(255,255,255,0.065);
+    }
+    .form-field select option { background: #111; color: var(--blanc); }
+    .add-line {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 112px minmax(116px, auto);
+      align-items: end;
+      gap: 1rem;
+      grid-column: 1 / -1;
+      padding: 1rem;
+      border: 1px solid rgba(212,175,55,0.12);
+      background: rgba(212,175,55,0.035);
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .add-line .form-field { min-width: 0; }
+    .add-line .form-field.qty { max-width: none; }
+    .add-line select, .add-line input { width: 100%; min-width: 0; box-sizing: border-box; }
+    .add-line .btn-secondary {
+      width: 100%;
+      min-height: 48px;
+      max-width: 100%;
+      align-self: end;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      box-sizing: border-box;
+      padding: 0.9rem 1rem;
+      letter-spacing: 0.18em;
+    }
+    .summary-panel {
+      position: sticky; top: 100px; align-self: start;
+    }
+    .summary-panel h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem; color: var(--or); font-weight: 300; margin-bottom: 1.4rem;
+    }
+    .cart-list {
+      display: flex; flex-direction: column; gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+    .cart-empty {
+      border: 1px solid rgba(212,175,55,0.12);
+      color: var(--text-muted);
+      padding: 1rem;
+      font-size: 0.82rem;
+      line-height: 1.7;
+    }
+    .cart-item {
+      display: grid; grid-template-columns: 1fr auto; gap: 0.8rem;
+      border-bottom: 1px solid rgba(212,175,55,0.12);
+      padding-bottom: 0.85rem;
+    }
+    .cart-item-name {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--blanc); font-size: 1.05rem;
+      margin-bottom: 0.2rem;
+    }
+    .cart-item-price {
+      color: var(--text-muted); font-size: 0.72rem;
+    }
+    .cart-item-controls {
+      display: flex; align-items: center; gap: 0.45rem;
+    }
+    .qty-btn {
+      width: 26px; height: 26px;
+      border: 1px solid rgba(212,175,55,0.28);
+      background: transparent; color: var(--or);
+      cursor: none;
+    }
+    .qty-btn:hover { background: var(--or); color: var(--noir); }
+    .qty-num { min-width: 18px; text-align: center; color: var(--text-light); font-size: 0.78rem; }
+    .remove-btn {
+      background: transparent; border: none; color: var(--text-muted);
+      cursor: none; font-size: 0.72rem; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-top: 0.4rem;
+    }
+    .remove-btn:hover { color: var(--or); }
+    .summary-row {
+      display: flex; justify-content: space-between; gap: 1.4rem;
+      border-bottom: 1px solid rgba(212,175,55,0.12);
+      padding: 0.75rem 0;
+      color: var(--text-muted); font-size: 0.78rem;
+    }
+    .summary-row strong { color: var(--text-light); font-weight: 400; text-align: right; }
+    .summary-total {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 1.3rem 0 1.5rem;
+      border-top: 1px solid rgba(212,175,55,0.3);
+      margin-top: 1rem;
+      color: var(--blanc); letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.7rem;
+    }
+    .summary-total strong {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--or); font-size: 1.8rem; font-weight: 300;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .notice {
+      display: none;
+      margin-top: 1rem;
+      border: 1px solid rgba(212,175,55,0.3);
+      padding: 0.9rem 1rem;
+      color: var(--text-light);
+      font-size: 0.82rem;
+      line-height: 1.7;
+    }
+    .notice.show { display: block; }
+    .notice.success { border-color: rgba(178,220,178,0.45); color: #cfe8cf; }
+    .notice.error { border-color: rgba(230,160,160,0.45); color: #efb5b5; }
+    .notice.info { border-color: rgba(212,175,55,0.45); color: var(--or-light); }
+    .confirmation-card {
+      display: none;
+      margin-top: 1.2rem;
+      border: 1px solid rgba(212,175,55,0.28);
+      background:
+        linear-gradient(135deg, rgba(212,175,55,0.12), rgba(255,255,255,0.025)),
+        rgba(0,0,0,0.32);
+      padding: 1.25rem;
+    }
+    .confirmation-card.show { display: block; }
+    .confirmation-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--or);
+      font-weight: 300;
+      font-size: 1.55rem;
+      margin-bottom: 0.65rem;
+    }
+    .confirmation-card p {
+      color: var(--text-light);
+      font-size: 0.82rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .confirmation-summary {
+      display: grid;
+      gap: 0.7rem;
+      border-top: 1px solid rgba(212,175,55,0.18);
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+    .confirmation-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 0.45fr) minmax(0, 1fr);
+      gap: 1rem;
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+      padding-bottom: 0.7rem;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+    .confirmation-row span {
+      color: var(--or);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 0.62rem;
+    }
+    .confirmation-row strong {
+      color: var(--text-light);
+      font-weight: 400;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+    .confirmation-row.total strong {
+      color: var(--or);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+    }
+    .payment-panel {
+      display: none;
+      grid-column: 1 / -1;
+      border: 1px solid rgba(212,175,55,0.18);
+      background:
+        linear-gradient(135deg, rgba(212,175,55,0.11), rgba(255,255,255,0.025)),
+        rgba(0,0,0,0.28);
+      padding: 1.2rem;
+      margin-top: 0.25rem;
+    }
+    .payment-panel.show { display: block; }
+    .payment-panel h3 {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--or);
+      font-size: 1.55rem;
+      font-weight: 300;
+      margin-bottom: 0.6rem;
+    }
+    .payment-panel p {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .payment-details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    .payment-detail {
+      border: 1px solid rgba(212,175,55,0.12);
+      padding: 0.85rem;
+      background: rgba(255,255,255,0.025);
+    }
+    .payment-detail span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+    .payment-detail strong {
+      color: var(--text-light);
+      font-weight: 400;
+      font-size: 0.9rem;
+    }
+    .manual-payment-text {
+      color: var(--or-light);
+      font-size: 0.76rem;
+      line-height: 1.7;
+      margin-top: 0.9rem;
+    }
+    .transaction-field { margin-top: 1rem; }
+    .transaction-field[hidden] { display: none; }
+
+    footer {
+      background: var(--noir);
+      border-top: 1px solid rgba(212,175,55,0.15);
+      padding: 4rem 5% 2rem;
+    }
+    .footer-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+    }
+    .footer-brand .nav-logo { display: block; margin-bottom: 1rem; font-size: 1.3rem; }
+    .footer-brand p { font-size: 0.78rem; color: var(--text-muted); line-height: 1.8; }
+    .footer-social { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
+    .social-link {
+      min-width: 36px; height: 36px; padding: 0 0.65rem;
+      border: 1px solid rgba(212,175,55,0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); text-decoration: none; font-size: 0.7rem;
+      transition: all 0.3s; letter-spacing: 0.08em;
+    }
+    .social-link:hover { border-color: var(--or); color: var(--or); background: rgba(212,175,55,0.05); }
+    .footer-col h4 {
+      font-size: 0.65rem; letter-spacing: 0.3em; color: var(--or);
+      text-transform: uppercase; margin-bottom: 1.2rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.6rem; }
+    .footer-col ul li a {
+      text-decoration: none; color: var(--text-muted); font-size: 0.78rem;
+      transition: color 0.3s;
+    }
+    .footer-col ul li a:hover { color: var(--or); }
+    .footer-contact p { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.5rem; line-height: 1.8; }
+    .footer-bottom {
+      max-width: 1200px; margin: 2rem auto 0;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em;
+      flex-wrap: wrap; gap: 1rem;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      right: 1.2rem;
+      bottom: 1.2rem;
+      z-index: 700;
+      background: var(--noir);
+      border: 1px solid var(--or);
+      color: var(--or);
+      text-decoration: none;
+      padding: 0.85rem 1.2rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      transition: background 0.3s, color 0.3s, transform 0.3s;
+    }
+    .whatsapp-float:hover { background: var(--or); color: var(--noir); transform: translateY(-2px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(25px);
+      transition: opacity 0.8s var(--transition), transform 0.8s var(--transition);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    .mobile-menu {
+      display: none; position: fixed; inset: 0;
+      background: rgba(10,10,10,0.98); z-index: 600;
+      flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--blanc); text-decoration: none;
+      font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300;
+      letter-spacing: 0.05em; transition: color 0.3s;
+    }
+    .mobile-menu a:hover { color: var(--or); }
+    .mobile-close {
+      position: absolute; top: 1.5rem; right: 5%;
+      background: none; border: none; color: var(--text-muted);
+      font-size: 1.8rem; cursor: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .why-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .vedette-grid { grid-template-columns: 1fr; }
+      .vedette-main { grid-row: span 1; min-height: 420px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .livraison-features { grid-template-columns: 1fr; gap: 1rem; }
+      .hero-side-text, .hero-ornament { display: none; }
+      .catalogue-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .commande-grid { grid-template-columns: 1fr; }
+      .add-line { grid-template-columns: 1fr; align-items: stretch; }
+      .add-line .form-field.qty { max-width: none; }
+      .add-line .btn-secondary { width: 100%; align-self: stretch; }
+      .summary-panel { position: static; }
+      .payment-details { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 901px) and (max-width: 1160px) {
+      .add-line { grid-template-columns: minmax(0, 1fr) 112px; }
+      .add-line .btn-secondary { grid-column: 1 / -1; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 4rem 5%; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero-btns { flex-direction: column; align-items: center; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .products-grid { grid-template-columns: 1fr 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .add-line { grid-template-columns: 1fr; align-items: stretch; }
+      .add-line .form-field.qty { max-width: none; }
+      .add-line .btn-secondary { width: 100%; align-self: stretch; }
+      .confirmation-row { grid-template-columns: 1fr; gap: 0.35rem; }
+      .confirmation-row strong { text-align: left; }
+      .whatsapp-float { left: 1rem; right: 1rem; text-align: center; justify-content: center; display: flex; }
+      footer { padding-bottom: 5rem; }
+    }
+    @media (max-width: 400px) {
+      .products-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" onclick="closeMobileMenu()" type="button">X</button>
+    <a href="#catalogue" onclick="closeMobileMenu()">Collection</a>
+    <a href="#vedette" onclick="closeMobileMenu()">Vedettes</a>
+    <a href="#commande" onclick="closeMobileMenu()">Commander</a>
+    <a href="#livraison" onclick="closeMobileMenu()">Livraison</a>
+    <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+  </div>
+
+  <nav id="navbar">
+    <a href="#" class="nav-logo">Rafahi</a>
+    <ul class="nav-links">
+      <li><a href="#catalogue">Collection</a></li>
+      <li><a href="#vedette">Vedettes</a></li>
+      <li><a href="#commande">Commander</a></li>
+      <li><a href="#livraison">Livraison</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;gap:1rem;align-items:center">
+      <button class="nav-cart" type="button" onclick="document.getElementById('commande').scrollIntoView({behavior:'smooth'})">
+        Panier
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="hamburger" type="button" onclick="openMobileMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-lines"></div>
+    <div class="hero-ornament"></div>
+    <div class="hero-side-text">Dakar - Senegal - Luxe Olfactif</div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Maison de Parfums</p>
+      <h1 class="hero-title">Rafahi<br><span>Parfum</span></h1>
+      <p class="hero-subtitle">L'elegance se reconnait avant meme les premiers mots.</p>
+      <p class="hero-text">Decouvrez une selection exclusive de parfums et d'huiles parfumees concus pour reveler votre personnalite et laisser une empreinte inoubliable.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" type="button" onclick="document.getElementById('catalogue').scrollIntoView({behavior:'smooth'})">Decouvrir la Collection</button>
+        <button class="btn-secondary" type="button" onclick="document.getElementById('commande').scrollIntoView({behavior:'smooth'})">Commander Maintenant</button>
+      </div>
+      <div class="hero-badge">Livraison partout au Senegal</div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Defiler</span>
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="why-inner">
+      <div class="why-text">
+        <p class="section-label reveal">L'Art du Parfum</p>
+        <h2 class="section-title reveal reveal-delay-1">Pourquoi le parfum est-il <em>essentiel ?</em></h2>
+        <div class="gold-line reveal reveal-delay-2"></div>
+        <p class="reveal reveal-delay-3">Votre parfum est une signature invisible. Il raconte votre histoire, marque les souvenirs et renforce votre presence. Sentir bon n'est pas un luxe, c'est une maniere de prendre soin de soi et d'inspirer confiance autour de vous chaque jour.</p>
+      </div>
+      <div class="why-cards">
+        <div class="why-card reveal">
+          <div class="why-card-num">01</div>
+          <h3>Elegance</h3>
+          <p>Un parfum d'exception eleve instantanement votre presence. Il est le dernier detail qui complete une tenue, un regard, un sourire.</p>
+        </div>
+        <div class="why-card reveal reveal-delay-1">
+          <div class="why-card-num">02</div>
+          <h3>Confiance</h3>
+          <p>Sentir bon renforce l'assurance et cree une aura naturelle. Ceux qui vous entourent le remarquent, meme sans le dire.</p>
+        </div>
+        <div class="why-card reveal reveal-delay-2">
+          <div class="why-card-num">03</div>
+          <h3>Souvenirs Inoubliables</h3>
+          <p>L'odorat est le sens le plus lie a la memoire. Votre fragrance devient l'empreinte que vous laissez dans la vie des autres.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="catalogue">
+    <div class="catalogue-header">
+      <div>
+        <p class="section-label">Notre Catalogue</p>
+        <h2 class="section-title">Notre <em>Collection</em></h2>
+      </div>
+      <div class="filters" id="filters">
+        <button class="filter-btn active" type="button" onclick="filterProducts('all', this)">Tous</button>
+        <button class="filter-btn" type="button" onclick="filterProducts('homme', this)">Homme</button>
+        <button class="filter-btn" type="button" onclick="filterProducts('femme', this)">Femme</button>
+        <button class="filter-btn" type="button" onclick="filterProducts('mixte', this)">Mixte</button>
+      </div>
+    </div>
+    <div class="catalogue-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="m16.5 16.5 4 4"></path>
+      </svg>
+      <input id="catalogueSearch" type="search" placeholder="Rechercher un parfum ou une marque" autocomplete="off" />
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <section id="vedette">
+    <div class="vedette-inner">
+      <p class="section-label reveal">Selection Exclusive</p>
+      <h2 class="section-title reveal reveal-delay-1">Produits <em>Vedettes</em></h2>
+      <div class="vedette-grid reveal">
+        <div class="vedette-main">
+          <img class="vedette-img" src="assets/images/parfum-53.jpg" alt="Intense Oud" onerror="this.style.display='none'" />
+          <div class="vedette-label">Exclusivite Maison</div>
+          <div class="vedette-name">Intense Oud</div>
+          <p class="vedette-desc">Gucci. Oud intense, sombre et dore, une signature luxe tres profonde.</p>
+          <div class="vedette-price-btn">
+            <span class="price-large">100 000 <span>FCFA</span></span>
+            <button class="btn-primary" type="button" data-add-product="product-53">Ajouter au Panier</button>
+          </div>
+        </div>
+        <div class="vedette-secondary">
+          <img class="vedette-img" src="assets/images/parfum-61.jpg" alt="Santal Royal" onerror="this.style.display='none'" />
+          <div class="vedette-label">Icone Orientale</div>
+          <div class="vedette-name">Santal Royal</div>
+          <p class="vedette-desc">Guerlain. Santal boise royal, noir et or, intense et sophistique.</p>
+          <div class="vedette-price-btn" style="margin-top:1rem">
+            <span class="price-large" style="font-size:1.3rem">109 900 <span>FCFA</span></span>
+            <button class="btn-secondary" type="button" data-add-product="product-61">Ajouter</button>
+          </div>
+        </div>
+        <div class="vedette-secondary">
+          <img class="vedette-img" src="assets/images/parfum-18.jpg" alt="Her Confession" onerror="this.style.display='none'" />
+          <div class="vedette-label">Signature Femme</div>
+          <div class="vedette-name">Her Confession</div>
+          <p class="vedette-desc">Lattafa. Signature feminine lumineuse, blanche et doree.</p>
+          <div class="vedette-price-btn" style="margin-top:1rem">
+            <span class="price-large" style="font-size:1.3rem">25 000 <span>FCFA</span></span>
+            <button class="btn-secondary" type="button" data-add-product="product-18">Ajouter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="commande">
+    <div class="commande-inner">
+      <div class="commande-header">
+        <p class="section-label reveal">Commande par Email</p>
+        <h2 class="section-title reveal reveal-delay-1">Finaliser votre <em>Commande</em></h2>
+        <div class="gold-line reveal reveal-delay-2" style="margin:1.5rem auto"></div>
+        <p class="reveal" style="color:var(--text-muted);font-size:0.82rem;line-height:1.9;max-width:620px;margin:0 auto">Remplissez le formulaire ci-dessous. Votre commande sera envoyee par email sans afficher d'adresse email sur le site.</p>
+      </div>
+
+      <div class="commande-grid">
+        <form class="order-form" id="orderForm">
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="fullName">Nom complet</label>
+              <input id="fullName" name="fullName" type="text" autocomplete="name" required />
+            </div>
+            <div class="form-field">
+              <label for="phone">Numero de telephone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" required />
+            </div>
+            <div class="form-field full">
+              <label for="address">Adresse de livraison</label>
+              <input id="address" name="address" type="text" autocomplete="street-address" required />
+            </div>
+            <div class="form-field">
+              <label for="city">Ville / Region</label>
+              <input id="city" name="city" type="text" autocomplete="address-level2" required />
+            </div>
+            <div class="add-line">
+              <div class="form-field">
+                <label for="product">Ajouter un produit au panier</label>
+                <select id="product" name="selectedProduct"></select>
+              </div>
+              <div class="form-field qty">
+                <label for="quantity">Quantite</label>
+                <input id="quantity" name="selectedQuantity" type="number" min="1" step="1" value="1" />
+              </div>
+              <button class="btn-secondary" type="button" onclick="addSelectedProduct()">Ajouter</button>
+            </div>
+            <div class="form-field">
+              <label for="payment">Mode de paiement</label>
+              <select id="payment" name="payment" required>
+                <option value="Paiement a la livraison">Paiement a la livraison</option>
+                <option value="Wave">Wave</option>
+                <option value="Orange Money">Orange Money</option>
+              </select>
+            </div>
+            <div class="form-field full">
+              <label for="notes">Notes supplementaires</label>
+              <textarea id="notes" name="notes" placeholder="Precisions sur la livraison, disponibilite, cadeau, etc."></textarea>
+            </div>
+            <div class="payment-panel" id="manualPaymentPanel">
+              <h3>Paiement manuel</h3>
+              <p>Veuillez effectuer votre paiement au numéro indiqué ci-dessus puis renseigner votre numéro de transaction afin que nous puissions confirmer votre commande.</p>
+              <div class="payment-details">
+                <div class="payment-detail">
+                  <span>Methode</span>
+                  <strong id="paymentMethodLabel">Wave</strong>
+                </div>
+                <div class="payment-detail">
+                  <span>Numero</span>
+                  <strong id="paymentNumberLabel">+221 77 127 41 69</strong>
+                </div>
+                <div class="payment-detail">
+                  <span>Montant</span>
+                  <strong id="paymentAmountLabel">0 FCFA</strong>
+                </div>
+              </div>
+              <div class="manual-payment-text" id="manualPaymentText">Paiement Wave : +221 77 127 41 69<br>Paiement Orange Money : +221 77 127 41 69</div>
+              <div class="form-field transaction-field" id="transactionField" hidden>
+                <label for="transactionNumber">Numero de transaction Wave / Orange Money</label>
+                <input id="transactionNumber" name="transactionNumber" type="text" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+
+          <input type="hidden" id="emailProduct" name="product" />
+          <input type="hidden" id="emailQuantity" name="quantity" />
+          <input type="hidden" id="emailPrice" name="price" />
+          <input type="hidden" id="emailTotal" name="total" />
+          <input type="hidden" id="emailPaymentMethod" name="paymentMethod" />
+          <input type="hidden" id="emailSummary" name="summary" />
+          <input type="hidden" id="emailOrderDateTime" name="orderDateTime" />
+          <input type="hidden" id="emailMerchantPhone" name="merchantPhone" />
+
+          <button class="btn-primary" type="submit" id="submitButton" style="width:100%;margin-top:1.4rem">Finaliser la Commande</button>
+          <div class="notice" id="formNotice" role="status" aria-live="polite"></div>
+          <div class="confirmation-card" id="confirmationCard" aria-live="polite">
+            <h3>Commande enregistrée</h3>
+            <p>✅ Votre commande a bien été enregistrée.</p>
+            <p>Merci pour votre confiance et votre achat chez Rafahil Parfum.</p>
+            <p>Nous allons préparer votre commande et vous contacter si nécessaire.</p>
+            <p>Livraison disponible partout au Sénégal.</p>
+            <div class="confirmation-summary">
+              <div class="confirmation-row"><span>Nom du client</span><strong id="confirmClient">-</strong></div>
+              <div class="confirmation-row"><span>Téléphone</span><strong id="confirmPhone">-</strong></div>
+              <div class="confirmation-row"><span>Produit(s)</span><strong id="confirmProducts">-</strong></div>
+              <div class="confirmation-row"><span>Quantité(s)</span><strong id="confirmQuantities">-</strong></div>
+              <div class="confirmation-row"><span>Paiement</span><strong id="confirmPayment">-</strong></div>
+              <div class="confirmation-row"><span>Livraison</span><strong id="confirmAddress">-</strong></div>
+              <div class="confirmation-row"><span>Notes</span><strong id="confirmNotes">-</strong></div>
+              <div class="confirmation-row total"><span>Total</span><strong id="confirmTotal">-</strong></div>
+            </div>
+          </div>
+        </form>
+
+        <aside class="summary-panel">
+          <h3>Votre Panier</h3>
+          <div class="cart-list" id="cartItems"></div>
+          <div class="summary-row"><span>Produit</span><strong id="summaryProduct">Panier vide</strong></div>
+          <div class="summary-row"><span>Quantite</span><strong id="summaryQuantity">0</strong></div>
+          <div class="summary-row"><span>Prix</span><strong id="summaryPrice">0 FCFA</strong></div>
+          <div class="summary-row"><span>Client</span><strong id="summaryClient">A renseigner</strong></div>
+          <div class="summary-row"><span>Telephone</span><strong id="summaryPhone">A renseigner</strong></div>
+          <div class="summary-row"><span>Livraison</span><strong id="summaryDelivery">A renseigner</strong></div>
+          <div class="summary-row"><span>Paiement</span><strong id="summaryPayment">Paiement a la livraison</strong></div>
+          <div class="summary-total"><span>Total</span><strong id="summaryTotal">0 FCFA</strong></div>
+          <p style="color:var(--text-muted);font-size:0.78rem;line-height:1.8">Verifiez votre resume avant l'envoi. Rafahi Parfum vous contactera rapidement pour confirmer la livraison.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="temoignages">
+    <div class="temoignages-inner">
+      <div class="temoignages-header">
+        <p class="section-label reveal">Ce qu'ils disent</p>
+        <h2 class="section-title reveal reveal-delay-1">Nos <em>Clients Temoignent</em></h2>
+        <div class="gold-line reveal reveal-delay-2" style="margin:1.5rem auto"></div>
+      </div>
+      <div class="temoignages-grid">
+        <div class="temoignage reveal">
+          <div class="stars">Note 5/5</div>
+          <p class="temoignage-text">J'ai recu mon Oud Royal en moins de 24h a Dakar. Le parfum est absolument somptueux, exactement comme decrit.</p>
+          <div class="temoignage-author">
+            <div class="author-avatar">AM</div>
+            <div><div class="author-name">Aminata Mbaye</div><div class="author-city">Dakar, Senegal</div></div>
+          </div>
+        </div>
+        <div class="temoignage reveal reveal-delay-1">
+          <div class="stars">Note 5/5</div>
+          <p class="temoignage-text">La Rose Orientale est un chef-d'oeuvre. La livraison a Thies etait rapide et l'emballage vraiment premium.</p>
+          <div class="temoignage-author">
+            <div class="author-avatar">ID</div>
+            <div><div class="author-name">Ibrahima Diallo</div><div class="author-city">Thies, Senegal</div></div>
+          </div>
+        </div>
+        <div class="temoignage reveal reveal-delay-2">
+          <div class="stars">Note 5/5</div>
+          <p class="temoignage-text">L'huile Gold tient toute la journee, c'est incroyable. On m'a demande mon parfum toute la journee.</p>
+          <div class="temoignage-author">
+            <div class="author-avatar">FD</div>
+            <div><div class="author-name">Fatou Diop</div><div class="author-city">Saint-Louis, Senegal</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="livraison">
+    <div class="livraison-inner">
+      <div class="livraison-mark reveal">SN</div>
+      <p class="section-label reveal">Service de Livraison</p>
+      <h2 class="section-title reveal reveal-delay-1">Livraison Rapide<br><em>Partout au Senegal</em></h2>
+      <div class="gold-line reveal reveal-delay-2" style="margin:1.5rem auto"></div>
+      <p class="reveal" style="color:var(--text-muted);font-size:0.88rem;line-height:2;max-width:500px;margin:0 auto">Nous livrons votre commande dans toutes les regions du Senegal avec soin et rapidite. Vos flacons arrivent emballes avec elegance.</p>
+      <div class="livraison-cities reveal reveal-delay-1">
+        <span class="city-tag">Dakar</span>
+        <span class="city-tag">Thies</span>
+        <span class="city-tag">Saint-Louis</span>
+        <span class="city-tag">Kaolack</span>
+        <span class="city-tag">Ziguinchor</span>
+        <span class="city-tag">Touba</span>
+        <span class="city-tag">Mbour</span>
+        <span class="city-tag">Diourbel</span>
+        <span class="city-tag">Tambacounda</span>
+        <span class="city-tag">Kolda</span>
+        <span class="city-tag">Louga</span>
+        <span class="city-tag">Toutes les regions</span>
+      </div>
+      <div class="livraison-features reveal reveal-delay-2">
+        <div class="livraison-feat">
+          <h4>Emballage Premium</h4>
+          <p>Chaque commande est soigneusement emballee pour proteger vos precieux flacons.</p>
+        </div>
+        <div class="livraison-feat">
+          <h4>Livraison Rapide</h4>
+          <p>Dakar en 24h. Autres regions en 48-72h selon destination.</p>
+        </div>
+        <div class="livraison-feat">
+          <h4>Contact Rapide</h4>
+          <p>Notre equipe reste disponible pour repondre a toutes vos questions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">Rafahi Parfum</a>
+        <p>Maison de parfums d'exception basee au Senegal. Nous selectionnons et proposons les meilleures fragrances orientales et occidentales pour une clientele exigeante.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/rafahil_holding_/" class="social-link" target="_blank" rel="noopener" title="Instagram">Instagram</a>
+          <a href="https://www.tiktok.com/@rafahiperfume" class="social-link" target="_blank" rel="noopener" title="TikTok">TikTok</a>
+          <a href="https://wa.me/221771274169?text=Bonjour%20Rafahi%20Parfum%2C%20je%20souhaite%20avoir%20plus%20d%E2%80%99informations." class="social-link" target="_blank" rel="noopener" title="WhatsApp">WhatsApp</a>
+          <a href="tel:+221771274169" class="social-link" title="Telephone">Appel</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Collection</h4>
+        <ul>
+          <li><a href="#catalogue">Parfums Homme</a></li>
+          <li><a href="#catalogue">Parfums Femme</a></li>
+          <li><a href="#catalogue">Mixtes</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Service</h4>
+        <ul>
+          <li><a href="#commande">Commander</a></li>
+          <li><a href="#livraison">Livraison</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-contact">
+        <h4>Contact</h4>
+        <p>Telephone / WhatsApp : +221 77 127 41 69</p>
+        <p>Instagram : @rafahil_holding_</p>
+        <p>TikTok : @rafahiperfume</p>
+        <p>Snapchat : @rafahi_holdig</p>
+        <p style="margin-top:0.8rem;font-size:0.7rem;color:rgba(136,136,136,0.6)">Livraison partout au Senegal</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>2026 Rafahi Parfum - Tous droits reserves</span>
+      <span>Livraison partout au Senegal</span>
+      <span>Commande envoyee par email</span>
+    </div>
+  </footer>
+
+  <a
+    class="whatsapp-float"
+    href="https://wa.me/221771274169?text=Bonjour%20Rafahi%20Parfum%2C%20je%20souhaite%20avoir%20plus%20d%E2%80%99informations."
+    target="_blank"
+    rel="noopener"
+  >Contact WhatsApp</a>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const cursorRing = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animateCursor() {
+      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+      rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+      cursorRing.style.left = rx + 'px'; cursorRing.style.top = ry + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    const products = [
+      {
+            "id": 1,
+            "name": "Lattafa Teriaq",
+            "brand": "Lattafa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-01.jpg",
+            "desc": "Floral ambré au flacon rose, élégant et féminin.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 2,
+            "name": "French Avenue Liquid Brun",
+            "brand": "French Avenue",
+            "category": "homme",
+            "badge": "Vedette",
+            "image": "assets/images/parfum-02.jpg",
+            "desc": "Boisé brun et chaleureux, une signature masculine intense.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 3,
+            "name": "Lattafa Ajwad",
+            "brand": "Lattafa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-03.jpg",
+            "desc": "Oriental fruité et enveloppant, présenté dans un coffret premium.",
+            "price": 15000,
+            "note": "60ml"
+      },
+      {
+            "id": 4,
+            "name": "Paris Corner Khair Pistachio",
+            "brand": "Paris Corner",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-04.jpg",
+            "desc": "Accord pistache gourmand avec une fraîcheur verte raffinée.",
+            "price": 22900,
+            "note": "100ml"
+      },
+      {
+            "id": 5,
+            "name": "Paris Corner Khair Fusion",
+            "brand": "Paris Corner",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-05.jpg",
+            "desc": "Fusion fruitée et lumineuse, douce et moderne.",
+            "price": 22900,
+            "note": "100ml"
+      },
+      {
+            "id": 6,
+            "name": "Lattafa Khamrah",
+            "brand": "Lattafa",
+            "category": "mixte",
+            "badge": "Vedette",
+            "image": "assets/images/parfum-06.jpg",
+            "desc": "Ambre, épices et douceur orientale dans un coffret iconique.",
+            "price": 40000,
+            "note": "100ml"
+      },
+      {
+            "id": 7,
+            "name": "Khadlaj Oud Noir",
+            "brand": "Khadlaj",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-07.jpg",
+            "desc": "Oud sombre, boisé et élégant pour un sillage affirmé.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 8,
+            "name": "Paris Corner Khair Confection",
+            "brand": "Paris Corner",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-08.jpg",
+            "desc": "Gourmand et coloré, avec une présence douce et addictive.",
+            "price": 22900,
+            "note": "100ml"
+      },
+      {
+            "id": 9,
+            "name": "Armaf Club de Nuit Intense Man",
+            "brand": "Armaf",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-09.jpg",
+            "desc": "Parfum masculin puissant, frais et boisé, grand classique moderne.",
+            "price": 25000,
+            "note": "105ml"
+      },
+      {
+            "id": 10,
+            "name": "Lattafa Pride Nebras",
+            "brand": "Lattafa Pride",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-10.jpg",
+            "desc": "Oriental gourmand dans un flacon noir et or très luxueux.",
+            "price": 20000,
+            "note": "100ml"
+      },
+      {
+            "id": 11,
+            "name": "Lattafa Hayaati Florence",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-11.jpg",
+            "desc": "Rose tendre, floral lumineux et présentation féminine pastel.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 12,
+            "name": "Lattafa Qallio Muskamma White Lotus",
+            "brand": "Lattafa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-12.jpg",
+            "desc": "Musc blanc, lotus et élégance dorée dans un coffret texturé.",
+            "price": 20000,
+            "note": "100ml"
+      },
+      {
+            "id": 13,
+            "name": "Lattafa Yara",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-13.jpg",
+            "desc": "Signature féminine douce, fruitée et crémeuse.",
+            "price": 13000,
+            "note": "100ml"
+      },
+      {
+            "id": 15,
+            "name": "Lattafa Badee Al Oud Noble Blush",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-15.jpg",
+            "desc": "Rose poudrée et douceur orientale dans un coffret blush.",
+            "price": 16000,
+            "note": "100ml"
+      },
+      {
+            "id": 16,
+            "name": "Lattafa Badee Al Oud Honor & Glory",
+            "brand": "Lattafa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-16.jpg",
+            "desc": "Oud doux et épicé, très premium dans son coffret blanc et or.",
+            "price": 16000,
+            "note": "100ml"
+      },
+      {
+            "id": 17,
+            "name": "Lattafa His Confession",
+            "brand": "Lattafa",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-17.jpg",
+            "desc": "Parfum masculin sombre, élégant et charismatique.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 18,
+            "name": "Lattafa Her Confession",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": "Vedette",
+            "image": "assets/images/parfum-18.jpg",
+            "desc": "Signature féminine lumineuse, blanche et dorée.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 19,
+            "name": "Lattafa Eclaire",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-19.jpg",
+            "desc": "Gourmand lacté, vanillé et crémeux au flacon beige doré.",
+            "price": 30000,
+            "note": "100ml"
+      },
+      {
+            "id": 20,
+            "name": "Lattafa Badee Al Oud Sublime",
+            "brand": "Lattafa",
+            "category": "mixte",
+            "badge": "Vedette",
+            "image": "assets/images/parfum-20.jpg",
+            "desc": "Oud rouge profond, coffret prestige et sillage oriental.",
+            "price": 16000,
+            "note": "100ml"
+      },
+      {
+            "id": 21,
+            "name": "Paris Corner Taskeen Caramel Cascade",
+            "brand": "Paris Corner",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-21.jpg",
+            "desc": "Gourmand caramel, chaleureux et enveloppant.",
+            "price": 23000,
+            "note": "100ml"
+      },
+      {
+            "id": 23,
+            "name": "Lattafa Badee Al Oud Amethyst",
+            "brand": "Lattafa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-23.jpg",
+            "desc": "Oud améthyste, floral boisé dans un coffret violet luxueux.",
+            "price": 16000,
+            "note": "100ml"
+      },
+      {
+            "id": 24,
+            "name": "Lattafa Mayar Pink",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-24.jpg",
+            "desc": "Fruité floral frais dans une présentation rose délicate.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 25,
+            "name": "Ahmed Rose Noir",
+            "brand": "Ahmed",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-25.jpg",
+            "desc": "Rose noire élégante, douce et sophistiquée.",
+            "price": 25000,
+            "note": "75ml"
+      },
+      {
+            "id": 26,
+            "name": "Asdaaf Ameerat Al Arab",
+            "brand": "Asdaaf",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-26.jpg",
+            "desc": "Parfum rouge oriental, féminin et royal.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 27,
+            "name": "Pendora Scents Intense Wayfarer Homme",
+            "brand": "Pendora Scents",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-27.jpg",
+            "desc": "Parfum masculin intense, sombre et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 29,
+            "name": "Khadlaj Nuha Cherry Blush",
+            "brand": "Khadlaj",
+            "category": "femme",
+            "badge": "Nouveau",
+            "image": "assets/images/parfum-29.jpg",
+            "desc": "Cerise douce et touche florale, dans un flacon rouge tres feminin.",
+            "price": 12000,
+            "note": "100ml"
+      },
+      {
+            "id": 30,
+            "name": "Khadlaj Nuha Vanilla Pearl",
+            "brand": "Khadlaj",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-30.jpg",
+            "desc": "Vanille nacree, ronde et elegante, pour un sillage doux et raffine.",
+            "price": 12000,
+            "note": "100ml"
+      },
+      {
+            "id": 31,
+            "name": "Khadlaj Nuha Khadlaj",
+            "brand": "Khadlaj",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-31.jpg",
+            "desc": "Signature feminine rose, douce et moderne.",
+            "price": 12000,
+            "note": "100ml"
+      },
+      {
+            "id": 32,
+            "name": "Paris Corner December Vanilla",
+            "brand": "Paris Corner",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-32.jpg",
+            "desc": "Vanille chaleureuse et enveloppante, parfaite pour une signature gourmande.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 33,
+            "name": "La Fede Aura Manga Splash",
+            "brand": "La Fede",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-33.jpg",
+            "desc": "Accord fruite tropical, lumineux et solaire.",
+            "price": 13000,
+            "note": "100ml"
+      },
+      {
+            "id": 34,
+            "name": "La Fede Aura Pista Dessert",
+            "brand": "La Fede",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-34.jpg",
+            "desc": "Pistache gourmande et douceur desert, une senteur cremeuse et originale.",
+            "price": 13000,
+            "note": "100ml"
+      },
+      {
+            "id": 35,
+            "name": "Ahmed Al Maghribi Oud & Roses",
+            "brand": "Ahmed Al Maghribi",
+            "category": "mixte",
+            "badge": "Vedette",
+            "image": "assets/images/parfum-35.jpg",
+            "desc": "Oud floral et rose profonde dans un coffret prestige.",
+            "price": 40000,
+            "note": "60ml"
+      },
+      {
+            "id": 36,
+            "name": "Afnan 9PM",
+            "brand": "Afnan",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-36.jpg",
+            "desc": "Parfum masculin intense, nocturne et seduisant.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 37,
+            "name": "FAAN Paris Exotic",
+            "brand": "FAAN Paris",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-37.jpg",
+            "desc": "Accord ambre dore, chaleureux et elegant.",
+            "price": 16000,
+            "note": "100ml"
+      },
+      {
+            "id": 38,
+            "name": "Paris Corner Marshmallow Blush",
+            "brand": "Paris Corner",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-38.jpg",
+            "desc": "Gourmand rose, sucre et doux, avec une presence tres feminine.",
+            "price": 23000,
+            "note": "100ml"
+      },
+      {
+            "id": 40,
+            "name": "Lattafa Mayar Cherry Intense",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-40.jpg",
+            "desc": "Cerise intense, rouge et lumineuse, une version plus profonde de Mayar.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 41,
+            "name": "Khadlaj Oud Pour Klassik",
+            "brand": "Khadlaj",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-41.jpg",
+            "desc": "Oud doux et classique, sobre et tres raffine.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 42,
+            "name": "Lattafa Fakhar Lattafa",
+            "brand": "Lattafa",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-42.jpg",
+            "desc": "Signature masculine elegante, noire et argentee.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 43,
+            "name": "Lattafa Fakhar Lattafa White",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-43.jpg",
+            "desc": "Variation blanche et doree, douce et lumineuse.",
+            "price": 17000,
+            "note": "100ml"
+      },
+      {
+            "id": 44,
+            "name": "Maison Asrar Vanilla Voyage",
+            "brand": "Maison Asrar",
+            "category": "mixte",
+            "badge": "Nouveau",
+            "image": "assets/images/parfum-44.jpg",
+            "desc": "Vanille voyageuse, ambree et chaude, dans un flacon couture.",
+            "price": 30000,
+            "note": "100ml"
+      },
+      {
+            "id": 46,
+            "name": "Rave Now Women",
+            "brand": "Rave",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-46.jpg",
+            "desc": "Floral fruite rose, frais et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 47,
+            "name": "Kayali Vanilla 28",
+            "brand": "Kayali",
+            "category": "mixte",
+            "badge": "Vedette",
+            "image": "assets/images/parfum-47.jpg",
+            "desc": "Vanille ambree iconique, profonde et luxueuse.",
+            "price": 33000,
+            "note": "100ml"
+      },
+      {
+            "id": 48,
+            "name": "Khadlaj Karus Secret Musk",
+            "brand": "Khadlaj",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-48.jpg",
+            "desc": "Musc secret, propre et elegant, avec une presentation blanc et or.",
+            "price": 17500,
+            "note": "100ml"
+      },
+      {
+            "id": 49,
+            "name": "Hermes Twilly d'Hermes",
+            "brand": "Hermes",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-49.jpg",
+            "desc": "Floral epice lumineux, colore et elegant, en format 50 ml.",
+            "price": 60000,
+            "note": "50ml"
+      },
+      {
+            "id": 50,
+            "name": "Azzaro Chrome",
+            "brand": "Azzaro",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-50.jpg",
+            "desc": "Fraicheur masculine bleue, propre et moderne.",
+            "price": 39500,
+            "note": "100ml"
+      },
+      {
+            "id": 51,
+            "name": "Lanvin L'Homme",
+            "brand": "Lanvin",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-51.jpg",
+            "desc": "Eau de toilette masculine douce, fraiche et raffinee.",
+            "price": 40700,
+            "note": "100ml"
+      },
+      {
+            "id": 52,
+            "name": "Hermes La Collection des Parfums-Jardins",
+            "brand": "Hermes",
+            "category": "mixte",
+            "badge": "Nouveau",
+            "image": "assets/images/parfum-52.jpg",
+            "desc": "Coffret decouverte Jardins Hermes, quatre signatures elegantes.",
+            "price": 70000,
+            "note": "4 x 15ml"
+      },
+      {
+            "id": 53,
+            "name": "Gucci Intense Oud",
+            "brand": "Gucci",
+            "category": "mixte",
+            "badge": "Vedette",
+            "image": "assets/images/parfum-53.jpg",
+            "desc": "Oud intense, sombre et dore, une signature luxe tres profonde.",
+            "price": 100000,
+            "note": "90ml"
+      },
+      {
+            "id": 54,
+            "name": "Guerlain Mon Guerlain",
+            "brand": "Guerlain",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-54.jpg",
+            "desc": "Eau de parfum feminine douce, florale et vanillee.",
+            "price": 85800,
+            "note": "100ml"
+      },
+      {
+            "id": 55,
+            "name": "Montblanc Signature Absolue",
+            "brand": "Montblanc",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-55.jpg",
+            "desc": "Signature doree, chaude et elegante, au flacon bijou.",
+            "price": 60000,
+            "note": "90ml"
+      },
+      {
+            "id": 56,
+            "name": "Yves Saint Laurent Libre",
+            "brand": "Yves Saint Laurent",
+            "category": "femme",
+            "badge": "Vedette",
+            "image": "assets/images/parfum-56.jpg",
+            "desc": "Floral ambré moderne, libre et lumineux.",
+            "price": 69500,
+            "note": "90ml"
+      },
+      {
+            "id": 57,
+            "name": "Guerlain La Petite Robe Noire",
+            "brand": "Guerlain",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-57.jpg",
+            "desc": "Signature rose noire, feminine et gourmande.",
+            "price": 78000,
+            "note": "100ml"
+      },
+      {
+            "id": 58,
+            "name": "Al Haramain Haramain Amber Oud Gold Edition",
+            "brand": "Al Haramain",
+            "category": "mixte",
+            "badge": "Vedette",
+            "image": "assets/images/parfum-58.jpg",
+            "desc": "Ambre oud dore, riche et luxueux, en grand format.",
+            "price": 100000,
+            "note": "120ml"
+      },
+      {
+            "id": 59,
+            "name": "Zadig & Voltaire This Is Her!",
+            "brand": "Zadig & Voltaire",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-59.jpg",
+            "desc": "Eau de parfum blanche, cremeuse et contemporaine.",
+            "price": 49500,
+            "note": "100ml"
+      },
+      {
+            "id": 60,
+            "name": "Guerlain Musc Noble",
+            "brand": "Guerlain",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-60.jpg",
+            "desc": "Musc oriental noble, rouge et or, profond et enveloppant.",
+            "price": 109900,
+            "note": "125ml"
+      },
+      {
+            "id": 61,
+            "name": "Guerlain Santal Royal",
+            "brand": "Guerlain",
+            "category": "mixte",
+            "badge": "Vedette",
+            "image": "assets/images/parfum-61.jpg",
+            "desc": "Santal boise royal, noir et or, intense et sophistique.",
+            "price": 109900,
+            "note": "125ml"
+      },
+      {
+            "id": 62,
+            "name": "Jean Paul Gaultier Scandal",
+            "brand": "Jean Paul Gaultier",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-62.jpg",
+            "desc": "Eau de parfum rose, sensuelle et tres identifiable.",
+            "price": 58500,
+            "note": "125ml"
+      },
+      {
+            "id": 63,
+            "name": "Jimmy Choo Fever",
+            "brand": "Jimmy Choo",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-63.jpg",
+            "desc": "Parfum feminin prune, gourmand et profond.",
+            "price": 58000,
+            "note": "40ml"
+      },
+      {
+            "id": 64,
+            "name": "Mauboussin Mademoiselle Twist",
+            "brand": "Mauboussin",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-64.jpg",
+            "desc": "Flacon rose elegant, floral et lumineux.",
+            "price": 38000,
+            "note": "90ml"
+      },
+      {
+            "id": 65,
+            "name": "Lancome Hypnose",
+            "brand": "Lancome",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-65.jpg",
+            "desc": "Eau de parfum bleue, douce et envoutante.",
+            "price": 78500,
+            "note": "75ml"
+      },
+      {
+            "id": 66,
+            "name": "Mauboussin A la Folie",
+            "brand": "Mauboussin",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-66.jpg",
+            "desc": "Eau de parfum rouge, romantique et chaleureuse.",
+            "price": 38000,
+            "note": "50ml"
+      },
+      {
+            "id": 67,
+            "name": "Montale Paris Oudmazing",
+            "brand": "Montale Paris",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-67.jpg",
+            "desc": "Oud noir et dore, puissant et moderne.",
+            "price": 81900,
+            "note": "100ml"
+      },
+      {
+            "id": 68,
+            "name": "Montale Paris Infinity",
+            "brand": "Montale Paris",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-68.jpg",
+            "desc": "Signature orientale bleue et or, ample et luxueuse.",
+            "price": 70000,
+            "note": "100ml"
+      },
+      {
+            "id": 69,
+            "name": "Montale Paris White Musk",
+            "brand": "Montale Paris",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-69.jpg",
+            "desc": "Musc blanc propre, metallique et raffine.",
+            "price": 70000,
+            "note": "100ml"
+      },
+      {
+            "id": 70,
+            "name": "Elie Saab Girl of Now",
+            "brand": "Elie Saab",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-70.jpg",
+            "desc": "Gourmand floral lumineux, doux et feminin.",
+            "price": 62500,
+            "note": "30ml"
+      },
+      {
+            "id": 71,
+            "name": "Montale Paris Intense Cherry",
+            "brand": "Montale Paris",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-71.jpg",
+            "desc": "Cerise intense, rouge et doree, avec une presence gourmande.",
+            "price": 70000,
+            "note": "100ml"
+      },
+      {
+            "id": 72,
+            "name": "Montale Paris Starry Nights",
+            "brand": "Montale Paris",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-72.jpg",
+            "desc": "Rose, oud et musc dans une signature nocturne premium.",
+            "price": 70000,
+            "note": "100ml"
+      },
+      {
+            "id": 73,
+            "name": "Montale Paris Aqua Palma",
+            "brand": "Montale Paris",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-73.jpg",
+            "desc": "Fraicheur solaire, palme et elegance estivale.",
+            "price": 70000,
+            "note": "100ml"
+      },
+      {
+            "id": 74,
+            "name": "Narciso Rodriguez Pure Musc For Her",
+            "brand": "Narciso Rodriguez",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-74.jpg",
+            "desc": "Musc blanc pur, propre et minimaliste.",
+            "price": 77500,
+            "note": "100ml"
+      },
+      {
+            "id": 75,
+            "name": "Narciso Rodriguez For Her",
+            "brand": "Narciso Rodriguez",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-75.jpg",
+            "desc": "Signature noire, musquee et elegante.",
+            "price": 75000,
+            "note": "100ml"
+      },
+      {
+            "id": 76,
+            "name": "Lolita Lempicka",
+            "brand": "Lolita Lempicka",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-76.jpg",
+            "desc": "Flacon coeur violet, gourmand floral et feerique.",
+            "price": 57500,
+            "note": "100ml"
+      },
+      {
+            "id": 77,
+            "name": "Mancera Paris Roses Vanille",
+            "brand": "Mancera Paris",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-77.jpg",
+            "desc": "Rose vanille intense, douce et enveloppante.",
+            "price": 73600,
+            "note": "120ml"
+      },
+      {
+            "id": 78,
+            "name": "Mancera Paris Roses Greedy",
+            "brand": "Mancera Paris",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-78.jpg",
+            "desc": "Rose fruitée et gourmande, elegante et solaire.",
+            "price": 72900,
+            "note": "120ml"
+      },
+      {
+            "id": 79,
+            "name": "Lattafa Fakhar Lattafa Silver",
+            "brand": "Lattafa",
+            "category": "homme",
+            "badge": "Nouveau",
+            "image": "assets/images/parfum-79.jpg",
+            "desc": "Edition argentée élégante, fraîche et masculine, au flacon miroir premium.",
+            "price": 17000,
+            "note": "100ml"
+      },
+      {
+            "id": 81,
+            "name": "Agathe Kattegat AK",
+            "brand": "Agathe Kattegat",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-81.jpg",
+            "desc": "Extrait frais et epice, gingembre et agrumes dans un flacon minimaliste.",
+            "price": 120000,
+            "note": "100ml"
+      },
+      {
+            "id": 82,
+            "name": "Agathe Kattegat Baie Sauvage",
+            "brand": "Agathe Kattegat",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-82.jpg",
+            "desc": "Baies rouges, citron vert et romarin pour une signature vive.",
+            "price": 120000,
+            "note": "100ml"
+      },
+      {
+            "id": 83,
+            "name": "Agathe Kattegat Cuirasse de Feu",
+            "brand": "Agathe Kattegat",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-83.jpg",
+            "desc": "Cuir chaud, safran et amande dans une signature profonde.",
+            "price": 120000,
+            "note": "100ml"
+      },
+      {
+            "id": 84,
+            "name": "Agathe Kattegat Flamme Vanille",
+            "brand": "Agathe Kattegat",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-84.jpg",
+            "desc": "Vanille, caramel et cerise dans une fragrance gourmande.",
+            "price": 120000,
+            "note": "100ml"
+      },
+      {
+            "id": 85,
+            "name": "Agathe Kattegat Nuit du Destin",
+            "brand": "Agathe Kattegat",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-85.jpg",
+            "desc": "Bois sombre et fruit de la passion pour un sillage nocturne.",
+            "price": 120000,
+            "note": "100ml"
+      },
+      {
+            "id": 86,
+            "name": "Ahmet Al Maghribi Musk & Roses",
+            "brand": "Ahmet Al Maghribi",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-86.jpg",
+            "desc": "Musc doux et rose propre dans un flacon nacre elegant.",
+            "price": 36000,
+            "note": "100ml"
+      },
+      {
+            "id": 87,
+            "name": "Arabian Oud Pink Moon",
+            "brand": "Arabian Oud",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-87.jpg",
+            "desc": "Parfum rose poudré, doux et feminin.",
+            "price": 140000,
+            "note": "100ml"
+      },
+      {
+            "id": 88,
+            "name": "Arabian Oud Diwan",
+            "brand": "Arabian Oud",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-88.jpg",
+            "desc": "Signature claire, musquee et sophistiquee.",
+            "price": 140000,
+            "note": "100ml"
+      },
+      {
+            "id": 89,
+            "name": "Ard Al Zaafaran Pistachio",
+            "brand": "Ard Al Zaafaran",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-89.jpg",
+            "desc": "Pistache et musc dans un coffret vert et or.",
+            "price": 20000,
+            "note": "100ml"
+      },
+      {
+            "id": 91,
+            "name": "Azzaro The Most Wanted",
+            "brand": "Azzaro",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-91.jpg",
+            "desc": "Sillage chaud, ambré et charismatique.",
+            "price": 75000,
+            "note": "100ml"
+      },
+      {
+            "id": 92,
+            "name": "Chanel Paris Coco Mademoiselle",
+            "brand": "Chanel",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-92.jpg",
+            "desc": "Classique feminin lumineux, chic et moderne.",
+            "price": 80000,
+            "note": "100ml"
+      },
+      {
+            "id": 94,
+            "name": "Dolce & Gabbana The Only One",
+            "brand": "Dolce & Gabbana",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-94.jpg",
+            "desc": "Cafe, violette et vanille dans une signature feminine.",
+            "price": 78000,
+            "note": "100ml"
+      },
+      {
+            "id": 95,
+            "name": "Elie Saab Le Parfum",
+            "brand": "Elie Saab",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-95.jpg",
+            "desc": "Fleur blanche solaire et miel delicat.",
+            "price": 65000,
+            "note": "100ml"
+      },
+      {
+            "id": 96,
+            "name": "Estee Lauder Pleasures",
+            "brand": "Estee Lauder",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-96.jpg",
+            "desc": "Floral frais et lumineux, signature feminine elegante.",
+            "price": 55000,
+            "note": "100ml"
+      },
+      {
+            "id": 97,
+            "name": "Emporio Armani Because It’s You",
+            "brand": "Emporio Armani",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-97.jpg",
+            "desc": "Rose, vanille et fruits rouges dans un flacon rose.",
+            "price": 68500,
+            "note": "100ml"
+      },
+      {
+            "id": 98,
+            "name": "Givenchy L'Interdit",
+            "brand": "Givenchy",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-98.jpg",
+            "desc": "Fleurs blanches, ambre et elegance couture.",
+            "price": 75000,
+            "note": "100ml"
+      },
+      {
+            "id": 99,
+            "name": "Gucci Bloom Profumo Di Fiori",
+            "brand": "Gucci",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-99.jpg",
+            "desc": "Floral jaune et lumineux de la ligne Gucci Bloom.",
+            "price": 85000,
+            "note": "100ml"
+      },
+      {
+            "id": 100,
+            "name": "Giorgio Armani My Way",
+            "brand": "Giorgio Armani",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-100.jpg",
+            "desc": "Fleurs blanches modernes et lumineuses.",
+            "price": 80800,
+            "note": "100ml"
+      },
+      {
+            "id": 101,
+            "name": "Gucci Flora Gorgeous Gardenia",
+            "brand": "Gucci",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-101.jpg",
+            "desc": "Gardenia solaire, poire et douceur florale.",
+            "price": 80000,
+            "note": "100ml"
+      },
+      {
+            "id": 102,
+            "name": "Gucci Flora Gorgeous Jasmine",
+            "brand": "Gucci",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-102.jpg",
+            "desc": "Jasmin lumineux et floral vert.",
+            "price": 80000,
+            "note": "100ml"
+      },
+      {
+            "id": 103,
+            "name": "Gucci Flora Gorgeous Magnolia",
+            "brand": "Gucci",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-103.jpg",
+            "desc": "Magnolia, patchouli et douceur violette.",
+            "price": 80000,
+            "note": "100ml"
+      },
+      {
+            "id": 104,
+            "name": "Guerlain Absolus Allegoria Patchouli Ardent",
+            "brand": "Guerlain",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-104.jpg",
+            "desc": "Patchouli ardent, boise et profond, signature Guerlain.",
+            "price": 109000,
+            "note": "100ml"
+      },
+      {
+            "id": 105,
+            "name": "Guerlain Idylle",
+            "brand": "Guerlain",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-105.jpg",
+            "desc": "Floral feminin doux et lumineux.",
+            "price": 65000,
+            "note": "100ml"
+      },
+      {
+            "id": 106,
+            "name": "Guerlain Encens Mythiques",
+            "brand": "Guerlain",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-106.jpg",
+            "desc": "Encens, ambre et notes orientales mythiques.",
+            "price": 109000,
+            "note": "100ml"
+      },
+      {
+            "id": 107,
+            "name": "Jimmy Choo I Want Choo",
+            "brand": "Jimmy Choo",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-107.jpg",
+            "desc": "Floral vanille et sensualite moderne.",
+            "price": 75000,
+            "note": "100ml"
+      },
+      {
+            "id": 108,
+            "name": "Jimmy Choo Classique",
+            "brand": "Jimmy Choo",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-108.jpg",
+            "desc": "Signature feminine chic et gourmande.",
+            "price": 59000,
+            "note": "100ml"
+      },
+      {
+            "id": 109,
+            "name": "Kenzo Jungle",
+            "brand": "Kenzo",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-109.jpg",
+            "desc": "Epices, ambre et signature orientale Kenzo.",
+            "price": 65000,
+            "note": "100ml"
+      },
+      {
+            "id": 110,
+            "name": "Juicy Couture Oui",
+            "brand": "Juicy Couture",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-110.jpg",
+            "desc": "Fruite floral moderne et colore.",
+            "price": 75000,
+            "note": "100ml"
+      },
+      {
+            "id": 111,
+            "name": "Kenzo World",
+            "brand": "Kenzo",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-111.jpg",
+            "desc": "Floral lumineux dans un flacon iconique.",
+            "price": 62000,
+            "note": "100ml"
+      },
+      {
+            "id": 112,
+            "name": "Lancome Idole",
+            "brand": "Lancome",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-112.jpg",
+            "desc": "Rose propre, musc et lumiere feminine.",
+            "price": 76000,
+            "note": "100ml"
+      },
+      {
+            "id": 113,
+            "name": "Lancome Tresor Midnight Rose",
+            "brand": "Lancome",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-113.jpg",
+            "desc": "Rose, framboise et sensualite nocturne.",
+            "price": 60000,
+            "note": "100ml"
+      },
+      {
+            "id": 114,
+            "name": "Lanvin Jeanne",
+            "brand": "Lanvin",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-114.jpg",
+            "desc": "Floral fruite tendre et feminin.",
+            "price": 50000,
+            "note": "100ml"
+      },
+      {
+            "id": 115,
+            "name": "Lattafa Afeef",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-115.jpg",
+            "desc": "Parfum Lattafa Afeef au flacon dore iconique.",
+            "price": 40000,
+            "note": "100ml"
+      },
+      {
+            "id": 116,
+            "name": "Lattafa Ana Abiyedh Poudrée",
+            "brand": "Lattafa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-116.jpg",
+            "desc": "Ana Abiyedh Poudree, musc doux et signature poudree.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 117,
+            "name": "Lattafa Mayar Natural Intense",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-117.jpg",
+            "desc": "Variation verte et fraiche de Mayar.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 118,
+            "name": "Lattafa Qaed Al Fursan",
+            "brand": "Lattafa",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-118.jpg",
+            "desc": "Oud noir, epices et bois profonds.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 119,
+            "name": "Lattafa Qaed Al Fursan Unlimited",
+            "brand": "Lattafa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-119.jpg",
+            "desc": "Oriental doux et dore, chaleureux.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 120,
+            "name": "Lattafa Sakeena",
+            "brand": "Lattafa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-120.jpg",
+            "desc": "Signature rouge orientale, intense et elegante.",
+            "price": 30000,
+            "note": "100ml"
+      },
+      {
+            "id": 121,
+            "name": "Lattafa Yara Candy",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-121.jpg",
+            "desc": "Gourmand rose, sucre et fruits rouges.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 122,
+            "name": "Liquides Imaginaires Mavis",
+            "brand": "Liquides Imaginaires",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-122.jpg",
+            "desc": "Agrumes, ambre et fraicheur masculine.",
+            "price": 200000,
+            "note": "100ml"
+      },
+      {
+            "id": 123,
+            "name": "Lolita Lempicka Sweet",
+            "brand": "Lolita Lempicka",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-123.jpg",
+            "desc": "Fruite rouge et gourmand, tres feminin.",
+            "price": 55000,
+            "note": "100ml"
+      },
+      {
+            "id": 124,
+            "name": "Liquides Imaginaires La Crima",
+            "brand": "Liquides Imaginaires",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-124.jpg",
+            "desc": "Fraicheur bleue, tonique et moderne.",
+            "price": 200000,
+            "note": "100ml"
+      },
+      {
+            "id": 125,
+            "name": "Maissa Oud Sakura",
+            "brand": "Maissa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/rafa5-maissa-oud-sakura.jpg",
+            "desc": "Signature niche claire et elegante.",
+            "price": 45000,
+            "note": "100ml"
+      },
+      {
+            "id": 126,
+            "name": "Maissa Île de la Beauté",
+            "brand": "Maissa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/rafa5-maissa-ile-de-la-beaute.jpg",
+            "desc": "Frais vert et raffine pour homme.",
+            "price": 45000,
+            "note": "100ml"
+      },
+      {
+            "id": 127,
+            "name": "Maissa Thevest 1981",
+            "brand": "Maissa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-127.jpg",
+            "desc": "Accord fume, boise et moderne.",
+            "price": 45000,
+            "note": "100ml"
+      },
+      {
+            "id": 128,
+            "name": "Maissa Vanilla",
+            "brand": "Maissa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-128.jpg",
+            "desc": "Vanille chaleureuse et enveloppante.",
+            "price": 45000,
+            "note": "100ml"
+      },
+      {
+            "id": 129,
+            "name": "Maissa Tobacco",
+            "brand": "Maissa",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-129.jpg",
+            "desc": "Tabac blond, ambre et bois doux.",
+            "price": 40000,
+            "note": "100ml"
+      },
+      {
+            "id": 130,
+            "name": "Matiere Premiere Vanilla Powder",
+            "brand": "Matiere Premiere",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-130.jpg",
+            "desc": "Vanille poudree et musc raffine.",
+            "price": 170000,
+            "note": "100ml"
+      },
+      {
+            "id": 131,
+            "name": "Miss Boucheron Paris",
+            "brand": "Boucheron",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-131.jpg",
+            "desc": "Floral rouge et bijoux, elegant et feminin.",
+            "price": 45000,
+            "note": "100ml"
+      },
+      {
+            "id": 132,
+            "name": "Mauboussin Pour Elle",
+            "brand": "Mauboussin",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-132.jpg",
+            "desc": "Floral rose et cristal, feminin et delicat.",
+            "price": 38000,
+            "note": "100ml"
+      },
+      {
+            "id": 133,
+            "name": "Montale Paris Arabians Tonka",
+            "brand": "Montale Paris",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/rafa5-montale-paris-arabians-tonka.jpg",
+            "desc": "Cacao gourmand, orange et vanille.",
+            "price": 88000,
+            "note": "100ml"
+      },
+      {
+            "id": 134,
+            "name": "Montale Paris Rendez-Vous à Milan",
+            "brand": "Montale Paris",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-134.jpg",
+            "desc": "Tonka, oud et ambre, tres puissant.",
+            "price": 70000,
+            "note": "100ml"
+      },
+      {
+            "id": 138,
+            "name": "Narciso Rodriguez Radiante",
+            "brand": "Narciso Rodriguez",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-138.jpg",
+            "desc": "Fleurs lumineuses et musc transparent.",
+            "price": 80000,
+            "note": "100ml"
+      },
+      {
+            "id": 139,
+            "name": "Nishane Nanshe",
+            "brand": "Nishane",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-139.jpg",
+            "desc": "Vanille florale niche, elegante et enveloppante.",
+            "price": 150000,
+            "note": "100ml"
+      },
+      {
+            "id": 140,
+            "name": "Nishane Ani",
+            "brand": "Nishane",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/rafa5-nishane-ani.jpg",
+            "desc": "Ananas, mousse de chene et fraicheur niche.",
+            "price": 160000,
+            "note": "100ml"
+      },
+      {
+            "id": 144,
+            "name": "Rituals Of Oudh",
+            "brand": "Rituals",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-144.jpg",
+            "desc": "Agrumes, epices et bois pour homme.",
+            "price": 50000,
+            "note": "100ml"
+      },
+      {
+            "id": 146,
+            "name": "Rosendo Mateu",
+            "brand": "Rosendo Mateu",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-146.jpg",
+            "desc": "Musc blanc propre et traditionnel.",
+            "price": 110000,
+            "note": "100ml"
+      },
+      {
+            "id": 147,
+            "name": "Swiss Arabian Shaghaf Oud Ahmar",
+            "brand": "Swiss Arabian",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-147.jpg",
+            "desc": "Oud rouge, ambre et douceur orientale.",
+            "price": 60000,
+            "note": "100ml"
+      },
+      {
+            "id": 148,
+            "name": "Swiss Arabian Shaghaf Oud Tonka",
+            "brand": "Swiss Arabian",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-148.jpg",
+            "desc": "Tonka, amande et oud gourmand.",
+            "price": 60000,
+            "note": "100ml"
+      },
+      {
+            "id": 149,
+            "name": "Swiss Arabian Shaghaf Vanilla Toffee",
+            "brand": "Swiss Arabian",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-149.jpg",
+            "desc": "Oud bleu, miel et ambre intense.",
+            "price": 60000,
+            "note": "100ml"
+      },
+      {
+            "id": 150,
+            "name": "Hermès Terre d'Hermès",
+            "brand": "Hermès",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-150.jpg",
+            "desc": "Agrumes, vetiver et mineralite masculine.",
+            "price": 65000,
+            "note": "100ml"
+      },
+      {
+            "id": 151,
+            "name": "Valentino Voce Viva Coffret",
+            "brand": "Valentino",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-151.jpg",
+            "desc": "Jasmin, vanille bourbon et elegance romaine.",
+            "price": 70000,
+            "note": "100ml"
+      },
+      {
+            "id": 152,
+            "name": "Valentino Voce Viva",
+            "brand": "Valentino",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/valentino-voce-viva-new.jpg",
+            "desc": "Fleur blanche, orange et vanille.",
+            "price": 22000,
+            "note": "100ml"
+      },
+      {
+            "id": 153,
+            "name": "Versace Dylan Blue",
+            "brand": "Versace",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-153.jpg",
+            "desc": "Fruite floral bleu, chic et moderne.",
+            "price": 72500,
+            "note": "100ml"
+      },
+      {
+            "id": 154,
+            "name": "Viktor & Rolf Flowerbomb",
+            "brand": "Viktor & Rolf",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-154.jpg",
+            "desc": "Bouquet floral gourmand et iconique.",
+            "price": 62500,
+            "note": "100ml"
+      },
+      {
+            "id": 155,
+            "name": "Xerjoff Naxos",
+            "brand": "Xerjoff",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-155.jpg",
+            "desc": "Agrumes, rhum et vanille en signature niche.",
+            "price": 160000,
+            "note": "100ml"
+      },
+      {
+            "id": 156,
+            "name": "Xerjoff Accento Overdose",
+            "brand": "Xerjoff",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-156.jpg",
+            "desc": "Tabac miel, lavande et vanille.",
+            "price": 160000,
+            "note": "100ml"
+      },
+      {
+            "id": 158,
+            "name": "Xerjoff Italica",
+            "brand": "Xerjoff",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-158.jpg",
+            "desc": "Amande, lait et gourmandise luxueuse.",
+            "price": 155000,
+            "note": "100ml"
+      },
+      {
+            "id": 159,
+            "name": "Xerjoff La Tosca",
+            "brand": "Xerjoff",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-159.jpg",
+            "desc": "Caramel, agrumes et vanille douce.",
+            "price": 155000,
+            "note": "100ml"
+      },
+      {
+            "id": 160,
+            "name": "Xerjoff Erba Gold",
+            "brand": "Xerjoff",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-160.jpg",
+            "desc": "Fruits, musc et ambre moderne.",
+            "price": 170000,
+            "note": "100ml"
+      },
+      {
+            "id": 161,
+            "name": "Xerjoff Erba Pura",
+            "brand": "Xerjoff",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-161.jpg",
+            "desc": "Menthe, citron et herbes aromatiques.",
+            "price": 150000,
+            "note": "100ml"
+      },
+      {
+            "id": 162,
+            "name": "Yves Rocher Comme une Evidence",
+            "brand": "Yves Rocher",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-162.jpg",
+            "desc": "Floral musque, doux et quotidien.",
+            "price": 38900,
+            "note": "100ml"
+      },
+      {
+            "id": 163,
+            "name": "Yves Saint Laurent Cinema",
+            "brand": "Yves Saint Laurent",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-163.jpg",
+            "desc": "Ambre, fleur blanche et signature doree.",
+            "price": 90000,
+            "note": "100ml"
+      },
+      {
+            "id": 164,
+            "name": "Nishane Ege / Ailaio",
+            "brand": "Nishane",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-164.jpg",
+            "desc": "Accord marin aromatique et lumineux.",
+            "price": 110000,
+            "note": "100ml"
+      },
+      {
+            "id": 166,
+            "name": "Lattafa Musk So Poudrée",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-166.jpg",
+            "desc": "Musk So Poudree, musc doux et feminin.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 167,
+            "name": "Lattafa Wild Vanille",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-167.jpg",
+            "desc": "Floral vert et feminin, variation premium.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 168,
+            "name": "Lattafa Yara Moi",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-168.jpg",
+            "desc": "Yara blanche, douce et elegante.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 169,
+            "name": "Burberry My Burberry",
+            "brand": "Burberry",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-169.jpg",
+            "desc": "Rose, pois de senteur et elegance britannique.",
+            "price": 77000,
+            "note": "100ml"
+      },
+      {
+            "id": 170,
+            "name": "Paris Corner Khair Felicity",
+            "brand": "Paris Corner",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-170.jpg",
+            "desc": "Huile/parfum dore, riche et oriental.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 171,
+            "name": "Paris Corner Taskeen Marina",
+            "brand": "Paris Corner",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-171.jpg",
+            "desc": "Fruite floral rose, feminin et petillant.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 172,
+            "name": "Boucheron Quatre",
+            "brand": "Boucheron",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-172.jpg",
+            "desc": "Floral ambré dans un flacon bijou.",
+            "price": 55000,
+            "note": "100ml"
+      },
+      {
+            "id": 173,
+            "name": "Agathe Kattegat Fruit du Dragon",
+            "brand": "Agathe Kattegat",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-173.jpg",
+            "desc": "Second visuel fruit du dragon, peche et coton.",
+            "price": 120000,
+            "note": "100ml"
+      },
+      {
+            "id": 175,
+            "name": "Atelier Des Ors Rose Omeyyade",
+            "brand": "Atelier Des Ors",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-175.jpg",
+            "desc": "Rose orientale luxueuse aux reflets dores.",
+            "price": 190000,
+            "note": "100ml"
+      },
+      {
+            "id": 176,
+            "name": "Bloom Baby Beauty Cotton",
+            "brand": "Bloom",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-176.jpg",
+            "desc": "Parfum doux et propre, esprit coton.",
+            "price": 30000,
+            "note": "100ml"
+      },
+      {
+            "id": 177,
+            "name": "Bloom Baby Beauty Happy",
+            "brand": "Bloom",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-177.jpg",
+            "desc": "Parfum orange lumineux et joyeux.",
+            "price": 30000,
+            "note": "100ml"
+      },
+      {
+            "id": 178,
+            "name": "Bloom Newton Juliet",
+            "brand": "Bloom Newton",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-178.jpg",
+            "desc": "Signature blanche, douce et elegante.",
+            "price": 70000,
+            "note": "100ml"
+      },
+      {
+            "id": 179,
+            "name": "Bloom Moments M Joy",
+            "brand": "Bloom Moments",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-179.jpg",
+            "desc": "Parfum cremeux et lumineux.",
+            "price": 60000,
+            "note": "100ml"
+      },
+      {
+            "id": 180,
+            "name": "Bloom Oriental Light Saheel",
+            "brand": "Bloom Oriental Light",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-180.jpg",
+            "desc": "Flacon noir oriental, boise et elegant.",
+            "price": 67000,
+            "note": "100ml"
+      },
+      {
+            "id": 181,
+            "name": "Bloom Marvels Sakura",
+            "brand": "Bloom Marvels",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-181.jpg",
+            "desc": "Parfum Sakura floral et raffine, au flacon noir premium.",
+            "price": 74000,
+            "note": "100ml"
+      },
+      {
+            "id": 182,
+            "name": "Coffret Devotion Dolce & Gabbana",
+            "brand": "Dolce & Gabbana",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-182.jpg",
+            "desc": "Coffret Devotion Dolce & Gabbana, presentation cadeau premium.",
+            "price": 80000,
+            "note": "100ml",
+            "imageClass": "product-img-contain"
+      },
+      {
+            "id": 183,
+            "name": "Guerlain Coffret Habit Rouge",
+            "brand": "Guerlain",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-183.jpg",
+            "desc": "Coffret masculin Guerlain au style classique.",
+            "price": 79000,
+            "note": "100ml",
+            "imageClass": "product-img-contain"
+      },
+      {
+            "id": 184,
+            "name": "Maissa Coffret 66 Avenue",
+            "brand": "Maissa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/rafa5-maissa-coffret-66-avenue.jpg",
+            "desc": "Coffret Maissa 66 Avenue avec trousse et parfums assortis.",
+            "price": 55000,
+            "note": "100ml"
+      },
+      {
+            "id": 185,
+            "name": "Maissa Coffret 66 Avenue Swarovski",
+            "brand": "Maissa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-185.jpg",
+            "desc": "Coffret Maissa 66 Avenue edition Swarovski.",
+            "price": 55000,
+            "note": "100ml"
+      },
+      {
+            "id": 186,
+            "name": "Maissa Coffret Chypre Imperial Swarovski",
+            "brand": "Maissa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-186.jpg",
+            "desc": "Coffret Maissa Chypre Imperial edition Swarovski.",
+            "price": 55000,
+            "note": "100ml"
+      },
+      {
+            "id": 187,
+            "name": "Maissa Coffret Protocole Swarovski",
+            "brand": "Maissa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-187.jpg",
+            "desc": "Coffret Maissa Protocole edition Swarovski.",
+            "price": 55000,
+            "note": "100ml"
+      },
+      {
+            "id": 188,
+            "name": "Maissa Coffret Symphonie",
+            "brand": "Maissa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/rafa5-maissa-coffret-symphonie.jpg",
+            "desc": "Coffret Maissa Symphonie avec presentation premium.",
+            "price": 55000,
+            "note": "100ml"
+      },
+      {
+            "id": 189,
+            "name": "Maissa Coffret Symphonie Swarovski",
+            "brand": "Maissa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-189.jpg",
+            "desc": "Coffret Maissa Symphonie edition Swarovski.",
+            "price": 55000,
+            "note": "100ml"
+      },
+      {
+            "id": 190,
+            "name": "Nishane Coffret Ani",
+            "brand": "Nishane",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-190.jpg",
+            "desc": "Coffret Nishane Ani avec parfum et soins assortis.",
+            "price": 110000,
+            "note": "100ml"
+      },
+      {
+            "id": 191,
+            "name": "Nishane Coffret Hacivat",
+            "brand": "Nishane",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-191.jpg",
+            "desc": "Coffret Nishane Hacivat avec parfum et soins assortis.",
+            "price": 110000,
+            "note": "100ml"
+      },
+      {
+            "id": 192,
+            "name": "Rumz Al Rasasi Coffret Pour Elle",
+            "brand": "Rasasi",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-192.jpg",
+            "desc": "Coffret Rumz Al Rasasi Pour Elle, feminin et elegant.",
+            "price": 50000,
+            "note": "100ml"
+      },
+      {
+            "id": 193,
+            "name": "Versace Coffret Crystal Noir",
+            "brand": "Versace",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/rafa5-versace-coffret-crystal-noir.jpg",
+            "desc": "Coffret Versace Crystal Noir avec parfum et soins assortis.",
+            "price": 80000,
+            "note": "100ml",
+            "imageClass": "product-img-contain"
+      },
+      {
+            "id": 196,
+            "name": "Giardini Di Toscana Bianco Latte",
+            "brand": "Giardini Di Toscana",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-196.jpg",
+            "desc": "Bianco Latte, gourmand lacte et vanille raffinee.",
+            "price": 120000,
+            "note": "100ml"
+      },
+      {
+            "id": 198,
+            "name": "Lancôme Figues & Agrumes",
+            "brand": "Lancôme",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-198.jpg",
+            "desc": "Flacon vert Gucci, floral aromatique.",
+            "price": 130000,
+            "note": "100ml"
+      },
+      {
+            "id": 199,
+            "name": "Lanvin Éclat d’Arpège",
+            "brand": "Lanvin",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-199.jpg",
+            "desc": "Flacon rond violet, signature douce.",
+            "price": 55000,
+            "note": "100ml"
+      },
+      {
+            "id": 200,
+            "name": "Lattafa Ameerat Al Arab Privé Rose",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-200.jpg",
+            "desc": "Ameerat Al Arab Prive Rose, floral rose et feminin.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 201,
+            "name": "Lattafa Candy Rose",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-201.jpg",
+            "desc": "Candy Rose, douceur florale et gourmande.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 203,
+            "name": "Lattafa Sugar Plum",
+            "brand": "Lattafa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-203.jpg",
+            "desc": "Flacon violet, oud oriental intense.",
+            "price": 20000,
+            "note": "100ml"
+      },
+      {
+            "id": 204,
+            "name": "Maissa Coffret Toscane Cuir Magic Moment",
+            "brand": "Maissa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-204.jpg",
+            "desc": "Coffret avec trousse et miniatures.",
+            "price": 75000,
+            "note": "100ml"
+      },
+      {
+            "id": 205,
+            "name": "Maissa Coffret Toscane Cuir 66 Avenue",
+            "brand": "Maissa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-205.jpg",
+            "desc": "Coffret rose avec trousse premium.",
+            "price": 75000,
+            "note": "100ml"
+      },
+      {
+            "id": 207,
+            "name": "Maissa Coffret Toscane Cuir Destin Des Anges",
+            "brand": "Maissa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-207.jpg",
+            "desc": "Coffret ambre avec trousse premium.",
+            "price": 75000,
+            "note": "100ml"
+      },
+      {
+            "id": 210,
+            "name": "Maissa Coffret Toscane Cuir Jasmine Mystérieux",
+            "brand": "Maissa",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-210.jpg",
+            "desc": "Coffret voyage rose avec trousse.",
+            "price": 75000,
+            "note": "100ml"
+      },
+      {
+            "id": 211,
+            "name": "Maissa Coffret Toscane Cuir Jawhara",
+            "brand": "Maissa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-211.jpg",
+            "desc": "Coffret voyage ambre avec trousse.",
+            "price": 75000,
+            "note": "100ml"
+      },
+      {
+            "id": 218,
+            "name": "Montblanc Signature",
+            "brand": "Montblanc",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-218.jpg",
+            "desc": "Flacon blanc nacre Montblanc Signature.",
+            "price": 56000,
+            "note": "100ml"
+      },
+      {
+            "id": 221,
+            "name": "Montale Paris Roses Musk",
+            "brand": "Montale Paris",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-221.jpg",
+            "desc": "Rose, musc et flacon rose metallique.",
+            "price": 70000,
+            "note": "100ml"
+      },
+      {
+            "id": 222,
+            "name": "Montale Paris Dark Aoud",
+            "brand": "Montale Paris",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-222.jpg",
+            "desc": "Oud sombre en flacon noir.",
+            "price": 70000,
+            "note": "100ml"
+      },
+      {
+            "id": 223,
+            "name": "Montale Paris Black Aoud",
+            "brand": "Montale Paris",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-223.jpg",
+            "desc": "Oud noir intense et boise.",
+            "price": 64500,
+            "note": "100ml"
+      },
+      {
+            "id": 228,
+            "name": "Bloom Moments Portrait",
+            "brand": "Bloom Moments",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-228.jpg",
+            "desc": "Flacon dore Portrait.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 230,
+            "name": "REEF Blanc Ash",
+            "brand": "REEF",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/rafa5-reef-blanc-ash.jpg",
+            "desc": "Coffret Reef 33.",
+            "price": 75000,
+            "note": "100ml"
+      },
+      {
+            "id": 232,
+            "name": "Rituals The Ritual of Ayurveda",
+            "brand": "Rituals",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-232.jpg",
+            "desc": "Brume rouge de soin parfumé.",
+            "price": 28000,
+            "note": "100ml"
+      },
+      {
+            "id": 233,
+            "name": "Rituals The Ritual of Mehr",
+            "brand": "Rituals",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-233.jpg",
+            "desc": "Brume orange de soin parfumé.",
+            "price": 28000,
+            "note": "100ml"
+      },
+      {
+            "id": 234,
+            "name": "Swiss Arabian Layali Rouge",
+            "brand": "Swiss Arabian",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-234.jpg",
+            "desc": "Musc floral decoratif en flacon bijou.",
+            "price": 30000,
+            "note": "100ml"
+      },
+      {
+            "id": 236,
+            "name": "Xerjoff Opera",
+            "brand": "Xerjoff",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-236.jpg",
+            "desc": "Flacon noir Xerjoff, signature intense.",
+            "price": 160000,
+            "note": "100ml"
+      },
+      {
+            "id": 239,
+            "name": "Yves Rocher L’Évidence",
+            "brand": "Yves Rocher",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-239.jpg",
+            "desc": "Flacon rose avec coffret.",
+            "price": 40000,
+            "note": "100ml"
+      },
+      {
+            "id": 241,
+            "name": "Yves Saint Laurent L’Absolu",
+            "brand": "Yves Saint Laurent",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-241.jpg",
+            "desc": "Flacon blanc et or Libre Intense.",
+            "price": 77000,
+            "note": "100ml"
+      },
+      {
+            "id": 242,
+            "name": "Rosendo Mateu 6",
+            "brand": "Rosendo Mateu",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-242.jpg",
+            "desc": "Musc tahara en flacon rectangulaire.",
+            "price": 110000,
+            "note": "100ml"
+      },
+      {
+            "id": 244,
+            "name": "Nina Ricci L’Extase",
+            "brand": "Nina Ricci",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/parfum-244.jpg",
+            "desc": "Flacon rose sombre et bijou.",
+            "price": 60000,
+            "note": "100ml"
+      },
+      {
+            "id": 245,
+            "name": "Maissa Coffret Toscane Cuir Soleil de Portofino",
+            "brand": "Maissa",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/parfum-245.jpg",
+            "desc": "Coffret voyage blanc avec trousse.",
+            "price": 77000,
+            "note": "100ml"
+      },
+      {
+            "id": 248,
+            "name": "Lattafa Ramz Gold",
+            "brand": "Lattafa",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/parfum-248.jpg",
+            "desc": "Flacon brun Ramz Lattafa.",
+            "price": 25000,
+            "note": "100ml"
+      },
+      {
+            "id": 249,
+            "name": "Dolce & Gabbana The One",
+            "brand": "Dolce & Gabbana",
+            "category": "homme",
+            "price": 71000,
+            "image": "assets/images/rafa5-dolce-gabbana-the-one.jpg",
+            "featured": false
+      },
+      {
+            "id": 250,
+            "name": "Oud Al Malik Oud Al Malik",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Oud Al Malik.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 251,
+            "name": "Oud Al Malik Pink Baby Natural Spray",
+            "brand": "Oud Al Malik",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Pink Baby Natural Spray.jpg",
+            "desc": "Parfum féminin raffiné, doux et lumineux.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 252,
+            "name": "Oud Al Malik Gissah",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Gissah.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 253,
+            "name": "Oud Al Malik  Cleopatra",
+            "brand": "Oud Al Malik",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik  Cleopatra.jpg",
+            "desc": "Parfum féminin raffiné, doux et lumineux.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 254,
+            "name": "Oud Al Malik King 18 Blue",
+            "brand": "Oud Al Malik",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik King 18 Blue.jpg",
+            "desc": "Parfum masculin élégant, au sillage moderne et affirmé.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 255,
+            "name": "Oud Al Malik Delicious",
+            "brand": "Oud Al Malik",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Delicious.jpg",
+            "desc": "Parfum féminin raffiné, doux et lumineux.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 256,
+            "name": "Oud Al Malik Garden Espania Pink",
+            "brand": "Oud Al Malik",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Garden Espania Pink.jpg",
+            "desc": "Parfum féminin raffiné, doux et lumineux.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 257,
+            "name": "Oud Al Malik Garden Espania",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Garden Espania.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 258,
+            "name": "Oud Al Malik BC Perfume",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik BC Perfume.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 259,
+            "name": "Oud Al Malik Boss Oud Green",
+            "brand": "Oud Al Malik",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Boss Oud Green.jpg",
+            "desc": "Parfum masculin élégant, au sillage moderne et affirmé.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 260,
+            "name": "Oud Al Malik Royal Black",
+            "brand": "Oud Al Malik",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Royal Black.jpg",
+            "desc": "Parfum masculin élégant, au sillage moderne et affirmé.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 261,
+            "name": "Oud Al Malik Bianco Latte",
+            "brand": "Oud Al Malik",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Bianco Latte.jpg",
+            "desc": "Parfum féminin raffiné, doux et lumineux.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 262,
+            "name": "Oud Al Malik Arorex",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Arorex.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 263,
+            "name": "Oud Al Malik CR7",
+            "brand": "Oud Al Malik",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik CR7.jpg",
+            "desc": "Parfum masculin élégant, au sillage moderne et affirmé.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 264,
+            "name": "Oud Al Malik Royal Intense",
+            "brand": "Oud Al Malik",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Royal Intense.jpg",
+            "desc": "Parfum masculin élégant, au sillage moderne et affirmé.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 265,
+            "name": "Oud Al Malik Pink Baby Pink",
+            "brand": "Oud Al Malik",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Pink Baby Pink.jpg",
+            "desc": "Parfum féminin raffiné, doux et lumineux.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 266,
+            "name": "Oud Al Malik Royal Intense Green",
+            "brand": "Oud Al Malik",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Royal Intense Green.jpg",
+            "desc": "Parfum masculin élégant, au sillage moderne et affirmé.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 267,
+            "name": "Oud Al Malik Jemyra",
+            "brand": "Oud Al Malik",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Jemyra.jpg",
+            "desc": "Parfum féminin raffiné, doux et lumineux.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 268,
+            "name": "Oud Al Malik  Imperial Valley",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik  Imperial Valley.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 269,
+            "name": "Oud Al Malik King 18",
+            "brand": "Oud Al Malik",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik King 18.jpg",
+            "desc": "Parfum masculin élégant, au sillage moderne et affirmé.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 270,
+            "name": "Oud Al Malik Oud Marackuja",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Oud Marackuja.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 271,
+            "name": "Oud Al Malik Casanova",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Casanova.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 272,
+            "name": "Oud Al Malik Super Dance",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Super Dance.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 273,
+            "name": "Oud Al Malik Gissah Green",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Gissah Green.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 274,
+            "name": "Oud Al Malik Arsh",
+            "brand": "Oud Al Malik",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Arsh.jpg",
+            "desc": "Parfum masculin élégant, au sillage moderne et affirmé.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 275,
+            "name": "Oud Al Malik Black Mist",
+            "brand": "Oud Al Malik",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Black Mist.jpg",
+            "desc": "Parfum masculin élégant, au sillage moderne et affirmé.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 276,
+            "name": "Oud Al Malik Malik One White",
+            "brand": "Oud Al Malik",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Malik One White.jpg",
+            "desc": "Parfum masculin élégant, au sillage moderne et affirmé.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 277,
+            "name": "Oud Al Malik Million's Crush",
+            "brand": "Oud Al Malik",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Million's Crush.png",
+            "desc": "Parfum féminin raffiné, doux et lumineux.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 278,
+            "name": "Oud Al Malik Taraf Arabian Oud",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Taraf Arabian Oud.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 279,
+            "name": "Oud Al Malik Vanilla Ocean",
+            "brand": "Oud Al Malik",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Vanilla Ocean.jpg",
+            "desc": "Parfum féminin raffiné, doux et lumineux.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 280,
+            "name": "Oud Al Malik Signature",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Signature.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 281,
+            "name": "Oud Al Malik Malik One Green",
+            "brand": "Oud Al Malik",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Malik One Green.jpg",
+            "desc": "Parfum masculin élégant, au sillage moderne et affirmé.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 282,
+            "name": "Oud Al Malik Boss Oud",
+            "brand": "Oud Al Malik",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Boss Oud.jpg",
+            "desc": "Parfum masculin élégant, au sillage moderne et affirmé.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 283,
+            "name": "Oud Al Malik Marshmellow",
+            "brand": "Oud Al Malik",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Marshmellow.jpg",
+            "desc": "Parfum féminin raffiné, doux et lumineux.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 284,
+            "name": "Oud Al Malik Dubai Meydan",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Dubai Meydan.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 285,
+            "name": "Oud Al Malik Vanille Tofee",
+            "brand": "Oud Al Malik",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Vanille Tofee.jpg",
+            "desc": "Parfum féminin raffiné, doux et lumineux.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 286,
+            "name": "Oud Al Malik Pink Baby",
+            "brand": "Oud Al Malik",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Pink Baby.jpg",
+            "desc": "Parfum féminin raffiné, doux et lumineux.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 287,
+            "name": "Oud Al Malik Malik One",
+            "brand": "Oud Al Malik",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Malik One.jpg",
+            "desc": "Parfum masculin élégant, au sillage moderne et affirmé.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 288,
+            "name": "Oud Al Malik Imperail Valley",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Imperail Valley.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 289,
+            "name": "Oud Al Malik Blue Musk",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Blue Musk.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 290,
+            "name": "Oud Al Malik  Pride of Malik",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik  Pride of Malik.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 291,
+            "name": "Oud Al Malik Madawi",
+            "brand": "Oud Al Malik",
+            "category": "femme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Madawi.jpg",
+            "desc": "Parfum féminin raffiné, doux et lumineux.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 292,
+            "name": "Oud Al Malik Orange",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Orange.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 293,
+            "name": "Oud Al Malik  Blue Musk",
+            "brand": "Oud Al Malik",
+            "category": "mixte",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik  Blue Musk.jpg",
+            "desc": "Parfum mixte élégant, pensé pour un sillage premium et moderne.",
+            "price": 15000,
+            "note": "100ml"
+      },
+      {
+            "id": 294,
+            "name": "Oud Al Malik Oud Djara",
+            "brand": "Oud Al Malik",
+            "category": "homme",
+            "badge": null,
+            "image": "assets/images/Oud Al Malik Oud Djara.jpg",
+            "desc": "Parfum masculin élégant, au sillage moderne et affirmé.",
+            "price": 15000,
+            "note": "100ml"
+      }
+];
+
+    const EMAILJS_PUBLIC_KEY = 'roM5lzZ42Z7ecrOTS';
+    const EMAILJS_SERVICE_ID = 'service_4h26w2y';
+    const EMAILJS_TEMPLATE_ID = 'template_gxgb3ic';
+
+    /*
+      Configuration EmailJS:
+      1. Creez un compte sur https://www.emailjs.com/
+      2. Ajoutez votre service email.
+      3. Creez un template avec ces variables:
+         fullName, phone, address, city, product, quantity, payment, notes,
+         transactionNumber, price, total, summary, orderDateTime, merchantPhone
+      4. Identifiants EmailJS configures pour Rafahi Parfum.
+      5. Configurez l'adresse de reception uniquement dans le dashboard EmailJS.
+         Ne mettez jamais cette adresse dans ce fichier public.
+
+      Alternative FormSubmit:
+      Vous pouvez utiliser un endpoint protege ou un identifiant hash FormSubmit.
+      Ne mettez pas votre adresse email visible dans l'attribut action du formulaire.
+    */
+
+    const MERCHANT_PHONE = '+221771274169';
+    const MERCHANT_PHONE_DISPLAY = '+221 77 127 41 69';
+
+    const productSelect = document.getElementById('product');
+    const quantityInput = document.getElementById('quantity');
+    const paymentSelect = document.getElementById('payment');
+    const orderForm = document.getElementById('orderForm');
+    const submitButton = document.getElementById('submitButton');
+    const formNotice = document.getElementById('formNotice');
+    const confirmationCard = document.getElementById('confirmationCard');
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartCountEl = document.getElementById('cartCount');
+    const manualPaymentPanel = document.getElementById('manualPaymentPanel');
+    const manualPaymentText = document.getElementById('manualPaymentText');
+    const paymentMethodLabel = document.getElementById('paymentMethodLabel');
+    const paymentNumberLabel = document.getElementById('paymentNumberLabel');
+    const paymentAmountLabel = document.getElementById('paymentAmountLabel');
+    const transactionField = document.getElementById('transactionField');
+    const transactionNumberInput = document.getElementById('transactionNumber');
+    const catalogueSearch = document.getElementById('catalogueSearch');
+    let cart = [];
+    let activeFilter = 'all';
+    const fields = {
+      fullName: document.getElementById('fullName'),
+      phone: document.getElementById('phone'),
+      address: document.getElementById('address'),
+      city: document.getElementById('city'),
+      notes: document.getElementById('notes')
+    };
+
+    function formatPrice(value) {
+      return Number(value).toLocaleString('fr-FR') + ' FCFA';
+    }
+
+    function isManualPayment() {
+      return paymentSelect.value === 'Wave' || paymentSelect.value === 'Orange Money';
+    }
+
+    function getOrderDateTime() {
+      return new Date().toLocaleString('fr-FR', {
+        dateStyle: 'full',
+        timeStyle: 'short'
+      });
+    }
+
+    function getCatLabel(cat) {
+      return { homme: 'Homme', femme: 'Femme', mixte: 'Mixte' }[cat] || cat;
+    }
+
+    function normalizeSearch(value) {
+      return value
+        .toString()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .trim();
+    }
+
+    function getProductUid(product) {
+      if (!product || product.id === undefined || product.id === null) return '';
+      return 'product-' + String(product.id);
+    }
+
+    function getProductByUid(uid) {
+      return products.find(product => product && getProductUid(product) === String(uid));
+    }
+
+    function getProductByKey(productKey) {
+      const key = String(productKey);
+      return getProductByUid(key) || products.find(product => product && product.name === key) || products.find(product => product && String(product.id) === key);
+    }
+
+    function renderProducts(filter = activeFilter) {
+      const grid = document.getElementById('productsGrid');
+      const query = normalizeSearch(catalogueSearch ? catalogueSearch.value : '');
+      activeFilter = filter;
+      const filtered = products.filter(p => {
+        if (!p) return false;
+        const matchesCategory = filter === 'all' || p.category === filter;
+        const searchableText = normalizeSearch(`${p.name} ${p.brand}`);
+        return matchesCategory && (!query || searchableText.includes(query));
+      });
+
+      if (!filtered.length) {
+        grid.innerHTML = '<div class="catalogue-empty">Aucun parfum ne correspond à votre recherche.</div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(p => `
+        <div class="product-card" data-cat="${p.category}">
+          <div class="product-img">
+            <img src="${p.image}" alt="${p.name}" class="${p.imageClass || ''}" onerror="this.style.display='none'" />
+            ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+            <div class="product-overlay">
+              <button class="btn-primary" type="button" style="font-size:0.65rem;padding:0.7rem 1.4rem" data-add-product="${getProductUid(p)}">Ajouter au Panier</button>
+            </div>
+          </div>
+          <div class="product-info">
+            <div class="product-category">${getCatLabel(p.category)}</div>
+            <div class="product-name">${p.name}</div>
+            <p class="product-desc">${p.desc}</p>
+            <div class="product-footer">
+              <div class="product-price">${p.price.toLocaleString('fr-FR')} <span>FCFA - ${p.note}</span></div>
+              <button class="btn-cart" type="button" data-add-product="${getProductUid(p)}">Ajouter</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderOptions() {
+      productSelect.innerHTML = products.filter(Boolean).map(product => `
+        <option value="${getProductUid(product)}">${product.name} - ${formatPrice(product.price)}</option>
+      `).join('');
+    }
+
+    function filterProducts(filter, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts(filter);
+    }
+
+    if (catalogueSearch) {
+      catalogueSearch.addEventListener('input', () => renderProducts(activeFilter));
+    }
+
+    document.addEventListener('click', event => {
+      const addButton = event.target.closest('[data-add-product]');
+      if (!addButton) return;
+      addToCartById(addButton.dataset.addProduct, 1);
+    });
+
+    function getSelectedProduct() {
+      return getProductByUid(productSelect.value) || products[0];
+    }
+
+    function addSelectedProduct() {
+      const quantity = Math.max(1, Number(quantityInput.value) || 1);
+      addToCartById(productSelect.value, quantity);
+      quantityInput.value = '1';
+    }
+
+    function addToCartById(productUid, quantity = 1) {
+      addToCart(productUid, quantity);
+    }
+
+    function addToCart(productKey, quantity = 1) {
+      hideConfirmationCard();
+      const product = getProductByKey(productKey);
+      if (!product) return;
+
+      const uid = getProductUid(product);
+      const safeQuantity = Math.max(1, Number(quantity) || 1);
+      const safePrice = Number(product.price) || 0;
+      const existing = cart.find(item => item.uid === uid);
+      if (existing) {
+        existing.qty += safeQuantity;
+      } else {
+        cart.push({
+          uid,
+          name: product.name,
+          price: safePrice,
+          note: product.note,
+          qty: safeQuantity
+        });
+      }
+
+      showNotice(product.name + ' ajoute au panier.', 'success');
+      updateSummary();
+
+    }
+
+    function changeCartQty(index, delta) {
+      hideConfirmationCard();
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      updateSummary();
+    }
+
+    function removeCartItem(index) {
+      hideConfirmationCard();
+      cart.splice(index, 1);
+      updateSummary();
+    }
+
+    function getCartTotal() {
+      return cart.reduce((total, item) => total + item.price * item.qty, 0);
+    }
+
+    function getCartQuantity() {
+      return cart.reduce((total, item) => total + item.qty, 0);
+    }
+
+    function renderCart() {
+      if (!cart.length) {
+        cartItemsEl.innerHTML = '<div class="cart-empty">Votre panier est vide. Ajoutez au moins un parfum avant de finaliser la commande.</div>';
+      } else {
+        cartItemsEl.innerHTML = cart.map((item, index) => `
+          <div class="cart-item">
+            <div>
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-price">${formatPrice(item.price)} - ${item.note}</div>
+              <button class="remove-btn" type="button" onclick="removeCartItem(${index})">Retirer</button>
+            </div>
+            <div class="cart-item-controls">
+              <button class="qty-btn" type="button" onclick="changeCartQty(${index}, -1)">-</button>
+              <span class="qty-num">${item.qty}</span>
+              <button class="qty-btn" type="button" onclick="changeCartQty(${index}, 1)">+</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      cartCountEl.textContent = String(getCartQuantity());
+    }
+
+    function updateSummary() {
+      renderCart();
+      const quantity = getCartQuantity();
+      const total = getCartTotal();
+      const productLabel = cart.length ? cart.map(item => item.name + ' x' + item.qty).join(', ') : 'Panier vide';
+      const priceLabel = cart.length ? cart.map(item => `${item.name}: ${formatPrice(item.price)}`).join(' | ') : '0 FCFA';
+      const client = fields.fullName.value.trim() || 'A renseigner';
+      const phone = fields.phone.value.trim() || 'A renseigner';
+      const city = fields.city.value.trim();
+      const address = fields.address.value.trim();
+      const delivery = [address, city].filter(Boolean).join(', ') || 'A renseigner';
+      const manualPayment = isManualPayment();
+      const transactionNumber = transactionNumberInput.value.trim();
+      const orderDateTime = getOrderDateTime();
+
+      manualPaymentPanel.classList.toggle('show', manualPayment);
+      transactionField.hidden = !manualPayment;
+      transactionNumberInput.required = manualPayment;
+      paymentMethodLabel.textContent = paymentSelect.value;
+      paymentNumberLabel.textContent = MERCHANT_PHONE_DISPLAY;
+      paymentAmountLabel.textContent = formatPrice(total);
+      manualPaymentText.innerHTML = 'Paiement Wave : ' + MERCHANT_PHONE_DISPLAY + '<br>Paiement Orange Money : ' + MERCHANT_PHONE_DISPLAY;
+
+      document.getElementById('summaryProduct').textContent = productLabel;
+      document.getElementById('summaryQuantity').textContent = String(quantity);
+      document.getElementById('summaryPrice').textContent = priceLabel;
+      document.getElementById('summaryClient').textContent = client;
+      document.getElementById('summaryPhone').textContent = phone;
+      document.getElementById('summaryDelivery').textContent = delivery;
+      document.getElementById('summaryPayment').textContent = paymentSelect.value;
+      document.getElementById('summaryTotal').textContent = formatPrice(total);
+
+      document.getElementById('emailProduct').value = productLabel;
+      document.getElementById('emailQuantity').value = String(quantity);
+      document.getElementById('emailPrice').value = priceLabel;
+      document.getElementById('emailTotal').value = formatPrice(total);
+      document.getElementById('emailPaymentMethod').value = paymentSelect.value;
+      document.getElementById('emailOrderDateTime').value = orderDateTime;
+      document.getElementById('emailMerchantPhone').value = MERCHANT_PHONE;
+      document.getElementById('emailSummary').value = [
+        'Articles:',
+        cart.length ? cart.map(item => `- ${item.name} x${item.qty} = ${formatPrice(item.price * item.qty)}`).join('\n') : '- Panier vide',
+        `Quantite totale: ${quantity}`,
+        `Total: ${formatPrice(total)}`,
+        `Client: ${client}`,
+        `Telephone: ${phone}`,
+        `Livraison: ${delivery}`,
+        `Paiement: ${paymentSelect.value}`,
+        manualPayment ? `Numero de transaction: ${transactionNumber || 'Non renseigne'}` : 'Numero de transaction: Non applicable',
+        manualPayment ? `Numero de paiement: ${MERCHANT_PHONE_DISPLAY}` : 'Numero de paiement: Non applicable',
+        `Notes: ${fields.notes.value.trim() || 'Aucune note'}`,
+        `Date et heure: ${orderDateTime}`
+      ].join('\n');
+    }
+
+    function showNotice(message, type) {
+      formNotice.textContent = message;
+      formNotice.className = 'notice show ' + type;
+    }
+
+    function hideConfirmationCard() {
+      confirmationCard.classList.remove('show');
+    }
+
+    function getOrderSnapshot() {
+      const productLabel = cart.length ? cart.map(item => item.name).join(', ') : 'Panier vide';
+      const quantitiesLabel = cart.length ? cart.map(item => `${item.name}: ${item.qty}`).join(' | ') : '0';
+      const quantity = getCartQuantity();
+      const total = getCartTotal();
+      const address = [fields.address.value.trim(), fields.city.value.trim()].filter(Boolean).join(', ') || 'A renseigner';
+      return {
+        client: fields.fullName.value.trim() || 'Client',
+        phone: fields.phone.value.trim(),
+        product: productLabel,
+        quantities: quantitiesLabel,
+        quantity: String(quantity),
+        paymentMethod: paymentSelect.value,
+        total: formatPrice(total),
+        address,
+        notes: fields.notes.value.trim() || 'Aucune note'
+      };
+    }
+
+    function showOrderConfirmation(order) {
+      document.getElementById('confirmClient').textContent = order.client;
+      document.getElementById('confirmPhone').textContent = order.phone || 'A renseigner';
+      document.getElementById('confirmProducts').textContent = order.product;
+      document.getElementById('confirmQuantities').textContent = order.quantities;
+      document.getElementById('confirmPayment').textContent = order.paymentMethod;
+      document.getElementById('confirmAddress').textContent = order.address;
+      document.getElementById('confirmNotes').textContent = order.notes;
+      document.getElementById('confirmTotal').textContent = order.total;
+      confirmationCard.classList.add('show');
+    }
+
+    async function sendOrder(event) {
+      event.preventDefault();
+      hideConfirmationCard();
+      updateSummary();
+
+      if (!cart.length) {
+        showNotice('Veuillez ajouter au moins un article au panier avant de finaliser la commande.', 'error');
+        return;
+      }
+
+      if (isManualPayment() && !transactionNumberInput.value.trim()) {
+        showNotice('Veuillez renseigner votre numero de transaction Wave / Orange Money avant de finaliser la commande.', 'error');
+        transactionNumberInput.focus();
+        return;
+      }
+
+      const isConfigured = ![
+        EMAILJS_PUBLIC_KEY,
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID
+      ].some(value => value.startsWith('VOTRE_'));
+
+      if (!isConfigured) {
+        showNotice("EmailJS n'est pas encore configure. Remplacez les identifiants dans le code pour activer l'envoi par email.", 'error');
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Envoi en cours';
+
+      const orderSnapshot = getOrderSnapshot();
+
+      try {
+        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+        await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, orderForm);
+        showNotice('Votre commande a bien été enregistrée.', 'success');
+        showOrderConfirmation(orderSnapshot);
+        cart = [];
+        orderForm.reset();
+        quantityInput.value = '1';
+        transactionNumberInput.required = false;
+        updateSummary();
+      } catch (error) {
+        showNotice("L'envoi a echoue. Verifiez la configuration EmailJS puis reessayez.", 'error');
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Finaliser la Commande';
+      }
+    }
+
+    function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+    function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+    window.addToCartById = addToCartById;
+    window.addToCart = addToCart;
+    window.addSelectedProduct = addSelectedProduct;
+    window.changeCartQty = changeCartQty;
+    window.removeCartItem = removeCartItem;
+    window.filterProducts = filterProducts;
+    window.openMobileMenu = openMobileMenu;
+    window.closeMobileMenu = closeMobileMenu;
+
+    renderProducts();
+    renderOptions();
+    updateSummary();
+
+    [productSelect, quantityInput, paymentSelect, transactionNumberInput, ...Object.values(fields)].forEach(element => {
+      element.addEventListener('input', updateSummary);
+      element.addEventListener('change', updateSummary);
+    });
+
+    paymentSelect.addEventListener('change', () => {
+      if (!isManualPayment()) {
+        transactionNumberInput.value = '';
+        transactionNumberInput.required = false;
+      }
+      updateSummary();
+    });
+
+    orderForm.addEventListener('submit', sendOrder);
+  </script>
+</body>
+</html>
